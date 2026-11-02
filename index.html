@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minhaj Motion — Short-Form Editor &amp; Long-Form Content</title>
+    <meta
+      name="description"
+      content="High-retention short-form videos, long-form edits, motion graphics and captions for creators, brands and startups. Over 5M+ views generated."
+    />
+    <meta name="author" content="Minhaj Motion" />
+    <meta name="theme-color" content="#0a0a0b" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Minhaj Motion — Short-Form Editor &amp; Long-Form Content" />
+    <meta
+      property="og:description"
+      content="Crafting scroll-stopping edits designed for attention. Short-form, long-form and motion graphics."
+    />
+    <meta property="og:image" content="assets/posters/showreel.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="assets/img/logo.png" />
+    <link rel="preload" href="assets/fonts/SequelSansBoldDisp2.woff" as="font" type="font/woff" crossorigin />
+    <link rel="preload" href="assets/fonts/SequelSansRomanBody2.woff" as="font" type="font/woff" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add("js");
+        try {
+          var t = localStorage.getItem("mm-theme");
+          if (t === "light" || t === "dark") root.setAttribute("data-theme", t);
+        } catch (e) {}
+
+        var reduce = false;
+        try {
+          reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        } catch (e) {}
+
+        var force = new URLSearchParams(window.location.search).get("intro");
+        var seen = false;
+        try {
+          seen = sessionStorage.getItem("mm-intro-seen") === "1";
+        } catch (e) {}
+
+        var play = force === "1" || (force !== "0" && !seen && !reduce);
+        root.setAttribute("data-intro", play ? "play" : "skip");
+        if (play) root.classList.add("is-loading");
+
+        // Safety net: never leave the page behind a loading screen.
+        window.setTimeout(function () {
+          if (root.getAttribute("data-intro") !== "play") return;
+          root.setAttribute("data-intro", "done");
+          root.classList.remove("is-loading");
+          root.classList.add("is-ready");
+          document.body.classList.remove("no-scroll");
+          document.body.removeAttribute("aria-busy");
+          var regions = document.querySelectorAll(
+            "body > .site-header, body > main, body > .site-footer, body > .skip-link"
+          );
+          for (var i = 0; i < regions.length; i++) regions[i].inert = false;
+          var preloader = document.getElementById("preloader");
+          if (preloader) preloader.hidden = true;
+        }, 9000);
+      })();
+    </script>
+    <noscript><style>.preloader{display:none!important}html.is-loading{overflow:auto!important}</style></noscript>
+  </head>
+
+  <body>
+    <div class="preloader" id="preloader" role="status" aria-live="polite">
+      <div class="preloader__slices" aria-hidden="true">
+        <div class="preloader__slice" style="--i: 0">
+          <span class="preloader__index">01</span>
+          <span class="preloader__word">MINHAJ</span>
+          <span class="preloader__meta">Short-form</span>
+        </div>
+        <div class="preloader__slice" style="--i: 1">
+          <span class="preloader__index">02</span>
+          <span class="preloader__word preloader__word--outline">MOTION</span>
+          <span class="preloader__meta">Long-form</span>
+        </div>
+        <div class="preloader__slice" style="--i: 2">
+          <span class="preloader__index">03</span>
+          <span class="preloader__word">PORTFOLIO</span>
+          <span class="preloader__meta">Motion</span>
+        </div>
+      </div>
+      <div class="preloader__bar" aria-hidden="true"><i></i></div>
+      <span class="visually-hidden">Loading portfolio</span>
+    </div>
+
+    <a class="skip-link" href="#work">Skip to work</a>
+
+    <!-- SVG sprite -->
+    <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-play" viewBox="0 0 24 24">
+        <path d="M8 5.2v13.6a.7.7 0 0 0 1.07.6l10.2-6.8a.7.7 0 0 0 0-1.2L9.07 4.6A.7.7 0 0 0 8 5.2Z" fill="currentColor" />
+      </symbol>
+      <symbol id="i-star" viewBox="0 0 24 24">
+        <path d="m12 2.6 2.9 5.9 6.5.95-4.7 4.58 1.1 6.47L12 17.45 6.2 20.5l1.1-6.47L2.6 9.45l6.5-.95L12 2.6Z" fill="currentColor" />
+      </symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6" />
+        <path d="M12 2.2v2.3M12 19.5v2.3M2.2 12h2.3M19.5 12h2.3M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M20.5 14.4A8.6 8.6 0 0 1 9.6 3.5a8.7 8.7 0 1 0 10.9 10.9Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M3 7h18M3 12h18M3 17h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-close" viewBox="0 0 24 24">
+        <path d="m5 5 14 14M19 5 5 19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="m4 12.5 5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24">
+        <path d="M12 4v16M4 12h16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-discord" viewBox="0 0 24 24">
+        <path d="M18.9 5.6A16.4 16.4 0 0 0 14.9 4.4l-.2.4a15 15 0 0 1 3.5 1.7 13.6 13.6 0 0 0-12.4 0 15 15 0 0 1 3.5-1.7l-.2-.4a16.4 16.4 0 0 0-4 1.2C2.7 9.2 2 12.7 2 16.2a16.6 16.6 0 0 0 5 2.5l.9-1.5a10.7 10.7 0 0 1-1.7-.8l.4-.3a11.8 11.8 0 0 0 10.8 0l.4.3c-.5.3-1.1.6-1.7.8l.9 1.5a16.6 16.6 0 0 0 5-2.5c0-3.5-.7-7-3.1-10.6ZM8.7 14.2c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Zm6.6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Z" fill="currentColor" />
+      </symbol>
+      <symbol id="i-instagram" viewBox="0 0 24 24">
+        <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" fill="none" stroke="currentColor" stroke-width="1.6" />
+        <circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.6" />
+        <circle cx="17.1" cy="6.9" r="1.2" fill="currentColor" />
+      </symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24">
+        <rect x="2.6" y="4.8" width="18.8" height="14.4" rx="3" fill="none" stroke="currentColor" stroke-width="1.6" />
+        <path d="m4.5 7 7.5 5.6L19.5 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24">
+        <rect x="8.5" y="8.5" width="12" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+        <path d="M15.5 5.5v-.7A2.3 2.3 0 0 0 13.2 2.5H5.8a2.3 2.3 0 0 0-2.3 2.3v7.4a2.3 2.3 0 0 0 2.3 2.3h.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      </symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24">
+        <path d="M12 2.5c.45 5.3 3.7 8.55 9 9-5.3.45-8.55 3.7-9 9-.45-5.3-3.7-8.55-9-9 5.3-.45 8.55-3.7 9-9Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
+      </symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24">
+        <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </symbol>
+    </svg>
+
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+    <!-- ============================ Header ============================ -->
+    <header class="site-header" id="siteHeader">
+      <div class="container site-header__inner">
+        <a class="brand" href="#top">
+          <span class="brand__mark" aria-hidden="true">M</span>
+          <span class="brand__name">MINHAJ MOTION</span>
+          <span class="visually-hidden">— home</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="#top" data-nav>Home</a></li>
+            <li><a href="#work" data-nav>Showreel</a></li>
+            <li><a href="#about" data-nav>About</a></li>
+            <li><a href="#testimonials" data-nav>Reviews</a></li>
+            <li><a href="#pricing" data-nav>Pricing</a></li>
+            <li><a href="#faq" data-nav>FAQ</a></li>
+            <li><a href="#contact" data-nav>Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+            <svg class="icon icon--sun"><use href="#i-sun"></use></svg>
+            <svg class="icon icon--moon"><use href="#i-moon"></use></svg>
+          </button>
+          <a class="btn btn--solid btn--sm site-header__hire" href="https://www.instagram.com/clipzy.media__/?hl=en" target="_blank" rel="noopener noreferrer">
+            Hire me
+            <svg class="icon"><use href="#i-arrow"></use></svg>
+          </a>
+          <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg class="icon icon--open"><use href="#i-menu"></use></svg>
+            <svg class="icon icon--close"><use href="#i-close"></use></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu" hidden>
+        <nav class="container" aria-label="Mobile">
+          <a href="#top">Home <span>01</span></a>
+          <a href="#work">Showreel <span>02</span></a>
+          <a href="#work">Selected work <span>03</span></a>
+          <a href="#about">About <span>04</span></a>
+          <a href="#testimonials">Reviews <span>05</span></a>
+          <a href="#pricing">Pricing <span>06</span></a>
+          <a href="#faq">FAQ <span>07</span></a>
+          <a href="#contact">Contact <span>08</span></a>
+        </nav>
+        <div class="mobile-menu__foot container">
+          <span class="pill pill--dot"><i></i> Available for projects</span>
+          <a href="mailto:clipzymediaco@gmail.com">clipzymediaco@gmail.com</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============================ Hero ============================ -->
+      <section class="hero" id="top">
+        <div
+          class="hero__rays"
+          data-light-rays
+          data-rays-origin="top-center"
+          data-rays-color="#ffffff"
+          data-rays-light-color="#7c6f59"
+          data-rays-speed="0.72"
+          data-rays-spread="0.58"
+          data-rays-length="1.55"
+          data-rays-density="1.05"
+          data-rays-sharpness="0.3"
+          data-rays-glow="0.52"
+          data-rays-haze="0.34"
+          data-rays-atmosphere="0.55"
+          data-rays-intensity="0.88"
+          data-rays-fade="1.1"
+          data-rays-saturation="0.7"
+          data-rays-influence="0.12"
+          data-rays-noise="0.02"
+          data-rays-distortion="0.08"
+          data-rays-opacity="0.7"
+          data-rays-light-opacity="0.3"
+          data-rays-max-ratio="1.6"
+          aria-hidden="true"
+        >
+          <canvas></canvas>
+        </div>
+        <div class="hero__ghost" aria-hidden="true">MINHAJ MOTION</div>
+
+        <div class="hero__ticker" aria-hidden="true">
+          <div class="ticker-track">
+            <span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span>
+          </div>
+        </div>
+
+        <div class="container hero__inner">
+          <div class="hero__grid">
+            <div class="hero__copy">
+              <div class="hero__pillrow">
+                <span class="pill pill--dot"><i></i> Available for projects</span>
+                <span class="pill pill--ghost">
+                  <svg class="icon"><use href="#i-spark"></use></svg>
+                  Booking November
+                </span>
+              </div>
+
+              <h1 class="hero__title">
+                <span class="hero__line"><span>Short-Form Editor</span></span>
+                <span class="hero__line"><span><em>&amp;</em> Long-Form Content</span></span>
+              </h1>
+
+              <p class="hero__lead">
+                Crafting scroll-stopping edits designed for attention.
+                Over <strong>5M+ views</strong> generated.
+              </p>
+
+              <div class="hero__stats">
+                <div><strong>5M+</strong><span>views generated</span></div>
+                <div><strong>30+</strong><span>creators monthly</span></div>
+                <div><strong>24h</strong><span>avg. turnaround</span></div>
+              </div>
+            </div>
+
+            <div class="hero__aside">
+              <div class="hero__actions">
+                <a class="btn btn--solid" href="#work">
+                  View work
+                  <svg class="icon"><use href="#i-arrow"></use></svg>
+                </a>
+                <a class="btn btn--ghost" href="#contact">
+                  <svg class="icon"><use href="#i-mail"></use></svg>
+                  Contact me
+                </a>
+              </div>
+              <p class="hero__meta">Based remote <span>·</span> Worldwide</p>
+              <div class="hero__slots">
+                <span class="hero__slots-dot" aria-hidden="true"></span>
+                <span><strong>2 slots</strong> open for new projects</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Infinite video rails -->
+        <div class="reel" aria-label="Recent edits preview">
+          <div class="container reel__head">
+            <div class="reel__title">
+              <span class="eyebrow">— On loop</span>
+              <span class="reel__hint">Recent edits <span>·</span> Hover to preview, click to watch</span>
+            </div>
+            <span class="pill pill--micro"><span class="reel__inf">∞</span> 3 rows · endless scroll</span>
+          </div>
+          <div class="reel__rail" id="reelRail"></div>
+        </div>
+
+        <div class="hero__scroll">
+          <span>Scroll</span>
+          <svg class="icon"><use href="#i-chevron"></use></svg>
+        </div>
+      </section>
+
+      <!-- ============================ Showreel ============================ -->
+      <section class="section" id="work">
+        <div class="container">
+          <div class="section-head section-head--center reveal">
+            <span class="eyebrow">— Showreel</span>
+            <h2>Viral short-form content</h2>
+            <p>Scroll-stopping edits for TikTok, Reels &amp; YouTube Shorts.</p>
+          </div>
+
+          <div class="showreel reveal" data-delay="1">
+            <button class="showreel__media" type="button" data-lightbox data-src="assets/videos/showreel.mp4" data-poster="assets/posters/showreel.jpg" data-title="2026 Showreel" data-category="Showreel" data-duration="0:20">
+              <img src="assets/posters/showreel.jpg" alt="Minhaj Motion showreel cover" />
+              <span class="showreel__shade" aria-hidden="true"></span>
+              <span class="showreel__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+              <span class="showreel__label">Play showreel</span>
+              <span class="showreel__corner showreel__corner--tl">2026</span>
+              <span class="showreel__corner showreel__corner--tr">0:20</span>
+            </button>
+            <div class="showreel__bar">
+              <span class="pill pill--ghost pill--micro"><span class="dot-live"></span> Sound on</span>
+              <p>Four years of edits, motion and hooks in twenty seconds.</p>
+              <span class="showreel__count">01 / 01</span>
+            </div>
+          </div>
+
+          <div class="work-block">
+            <div class="work-head reveal">
+              <div>
+                <span class="eyebrow">— Selected work</span>
+                <h3 class="work-head__title">Edits that hold attention</h3>
+              </div>
+              <div class="filters" role="group" aria-label="Filter work">
+                <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">All <span>10</span></button>
+                <button class="filter" type="button" data-filter="short" aria-pressed="false">Short-form <span>4</span></button>
+                <button class="filter" type="button" data-filter="long" aria-pressed="false">Long-form <span>2</span></button>
+                <button class="filter" type="button" data-filter="motion" aria-pressed="false">Motion <span>4</span></button>
+              </div>
+            </div>
+
+            <div class="work-grid" id="workGrid">
+              <article class="work-card" data-cat="short" data-delay="1">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-01.mp4" data-poster="assets/posters/short-01.jpg" data-title="Skincare hook — creator series" data-category="Short-form" data-duration="0:51"><span class="visually-hidden">Skincare hook</span>
+                  <img src="assets/posters/short-01.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-01.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Short-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:51</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Skincare hook</h4>
+                  <span>1.2M views</span>
+                </div>
+              </article>
+
+              <article class="work-card work-card--wide" data-cat="motion" data-delay="2">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-02.mp4" data-poster="assets/posters/motion-02.jpg" data-title="SaaS launch — product film" data-category="Motion graphics" data-duration="0:41"><span class="visually-hidden">SaaS launch</span>
+                  <img src="assets/posters/motion-02.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-02.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Motion graphics</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:41</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>SaaS launch</h4>
+                  <span>820K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="long" data-delay="3">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-03.mp4" data-poster="assets/posters/short-03.jpg" data-title="Podcast clip pack — long-form to shorts" data-category="Long-form" data-duration="1:44"><span class="visually-hidden">Podcast clip pack</span>
+                  <img src="assets/posters/short-03.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-03.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Long-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">1:44</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Podcast clip pack</h4>
+                  <span>2.4M views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="motion" data-delay="1">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-04.mp4" data-poster="assets/posters/motion-04.jpg" data-title="Brand sting — identity in motion" data-category="Motion graphics" data-duration="0:17"><span class="visually-hidden">Brand sting</span>
+                  <img src="assets/posters/motion-04.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-04.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Motion graphics</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:17</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Brand sting</h4>
+                  <span>640K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="short" data-delay="2">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-05.mp4" data-poster="assets/posters/short-05.jpg" data-title="Fitness series — retention edit" data-category="Short-form" data-duration="1:00"><span class="visually-hidden">Fitness series</span>
+                  <img src="assets/posters/short-05.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-05.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Short-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">1:00</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Fitness series</h4>
+                  <span>1.8M views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="motion" data-delay="3">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-03.mp4" data-poster="assets/posters/motion-03.jpg" data-title="Logo animation — brand reveal" data-category="Motion graphics" data-duration="0:08"><span class="visually-hidden">Logo animation</span>
+                  <img src="assets/posters/motion-03.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-03.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Motion graphics</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:08</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Logo animation</h4>
+                  <span>300K views</span>
+                </div>
+              </article>
+
+              <article class="work-card work-card--wide" data-cat="long" data-delay="1">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/longform-01.mp4" data-poster="assets/posters/longform-01.jpg" data-title="Documentary cut — long-form storytelling" data-category="Long-form" data-duration="0:12"><span class="visually-hidden">Documentary cut</span>
+                  <img src="assets/posters/longform-01.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/longform-01.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Long-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:12</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Documentary cut</h4>
+                  <span>480K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="short" data-delay="2">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-08.mp4" data-poster="assets/posters/short-08.jpg" data-title="Gaming highlight — punch-in edit" data-category="Short-form" data-duration="1:00"><span class="visually-hidden">Gaming highlight</span>
+                  <img src="assets/posters/short-08.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-08.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Short-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">1:00</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Gaming highlight</h4>
+                  <span>900K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="motion" data-delay="3">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-01.mp4" data-poster="assets/posters/motion-01.jpg" data-title="Product teaser — type in motion" data-category="Motion graphics" data-duration="0:11"><span class="visually-hidden">Product teaser</span>
+                  <img src="assets/posters/motion-01.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-01.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Motion graphics</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:11</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Product teaser</h4>
+                  <span>520K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="short" data-delay="1">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-06.mp4" data-poster="assets/posters/short-06.jpg" data-title="Recipe short — step-by-step edit" data-category="Short-form" data-duration="0:40"><span class="visually-hidden">Recipe short</span>
+                  <img src="assets/posters/short-06.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-06.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Short-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:40</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Recipe short</h4>
+                  <span>1.1M views</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ Stats ============================ -->
+      <section class="stats-band" aria-label="Results">
+        <div class="container stats">
+          <div class="stat reveal">
+            <strong><span class="stat__num" data-target="5">5</span><span class="stat__suffix">M+</span></strong>
+            <span>views generated</span>
+          </div>
+          <div class="stat reveal" data-delay="1">
+            <strong><span class="stat__num" data-target="30">30</span><span class="stat__suffix">+</span></strong>
+            <span>creators monthly</span>
+          </div>
+          <div class="stat reveal" data-delay="2">
+            <strong><span class="stat__num" data-target="350">350</span><span class="stat__suffix">+</span></strong>
+            <span>videos delivered</span>
+          </div>
+          <div class="stat reveal" data-delay="3">
+            <strong><span class="stat__num" data-target="24">24</span><span class="stat__suffix">h</span></strong>
+            <span>average turnaround</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ About ============================ -->
+      <section class="section about" id="about">
+        <div class="container">
+          <div class="about__grid">
+            <div class="about__intro reveal">
+              <span class="eyebrow">— About</span>
+              <h2>Edits engineered for the first three seconds.</h2>
+              <p>
+                I'm Minhaj — a short-form editor and motion designer helping creators, brands and
+                startups turn attention into growth. For the last four years I've cut high-retention
+                videos for TikTok, Reels, YouTube Shorts and long-form YouTube.
+              </p>
+              <p>
+                From the first frame to the final caption, every decision is made to keep people
+                watching — and to make your brand feel unmistakable.
+              </p>
+
+              <div class="about__tools">
+                <span class="pill pill--ghost">Premiere Pro</span>
+                <span class="pill pill--ghost">After Effects</span>
+                <span class="pill pill--ghost">DaVinci Resolve</span>
+                <span class="pill pill--ghost">Photoshop</span>
+                <span class="pill pill--ghost">CapCut</span>
+                <span class="pill pill--ghost">Frame.io</span>
+              </div>
+
+              <a class="btn btn--ghost" href="#contact">Start a project <svg class="icon"><use href="#i-arrow"></use></svg></a>
+            </div>
+
+            <aside class="about__card reveal" data-delay="2">
+              <div class="about__card-top">
+                <span class="pill pill--dot"><i></i> Available for projects</span>
+                <span class="about__card-year">Since 2021</span>
+              </div>
+              <div class="about__reel">
+                <img src="assets/posters/motion-01.jpg" alt="Motion graphics frame from a recent project" loading="lazy" />
+                <span class="about__reel-shade" aria-hidden="true"></span>
+                <span class="about__reel-tag">Motion / 4K</span>
+                <span class="about__reel-play"><svg class="icon"><use href="#i-play"></use></svg></span>
+              </div>
+              <div class="about__facts">
+                <div><strong>4+</strong><span>years editing</span></div>
+                <div><strong>98%</strong><span>on-time delivery</span></div>
+                <div><strong>4.9</strong><span>avg. rating</span></div>
+              </div>
+              <p class="about__note">
+                Working with creators from 12 countries — remote, async, and fast.
+              </p>
+            </aside>
+          </div>
+
+          <div class="values">
+            <div class="values__head reveal">
+              <span class="eyebrow">— Why choose me</span>
+              <h3>Built for the scroll, not just the timeline.</h3>
+            </div>
+            <div class="values__grid">
+              <article class="value reveal" data-delay="1">
+                <span class="value__num">01</span>
+                <span class="value__icon"><svg class="icon"><use href="#i-spark"></use></svg></span>
+                <h4>Hook-first thinking</h4>
+                <p>Every edit is built around the first three seconds — the moment that decides whether the rest gets watched.</p>
+              </article>
+              <article class="value reveal" data-delay="2">
+                <span class="value__num">02</span>
+                <span class="value__icon"><svg class="icon"><use href="#i-play"></use></svg></span>
+                <h4>Retention-first pacing</h4>
+                <p>Cuts, b-roll and sound design timed to keep watch time high without making the video feel frantic.</p>
+              </article>
+              <article class="value reveal" data-delay="3">
+                <span class="value__num">03</span>
+                <span class="value__icon"><svg class="icon"><use href="#i-star"></use></svg></span>
+                <h4>Motion with meaning</h4>
+                <p>Graphics and animations that explain the idea, not decorate it. Clean, brand-safe and always readable.</p>
+              </article>
+              <article class="value reveal" data-delay="1">
+                <span class="value__num">04</span>
+                <span class="value__icon"><svg class="icon"><use href="#i-check"></use></svg></span>
+                <h4>Captions that convert</h4>
+                <p>Kinetic captions, emphasis and emoji cues tuned for sound-off viewing on every platform.</p>
+              </article>
+              <article class="value reveal" data-delay="2">
+                <span class="value__num">05</span>
+                <span class="value__icon"><svg class="icon"><use href="#i-arrow"></use></svg></span>
+                <h4>Reliable turnaround</h4>
+                <p>Most edits land within 24–48 hours. Clear timelines, no chasing, no surprises at the deadline.</p>
+              </article>
+              <article class="value reveal" data-delay="3">
+                <span class="value__num">06</span>
+                <span class="value__icon"><svg class="icon"><use href="#i-mail"></use></svg></span>
+                <h4>Easy communication</h4>
+                <p>Async updates, timestamped feedback and a single place for revisions. Simple from brief to delivery.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ Testimonials ============================ -->
+      <section class="section section--line testimonials" id="testimonials">
+        <div class="container">
+          <div class="section-head section-head--center reveal">
+            <span class="eyebrow">— Reviews</span>
+            <h2>Trusted by 30+ creators monthly</h2>
+            <p>Real results from real creators and brands.</p>
+          </div>
+          <div class="rating reveal" data-delay="1">
+            <span class="rating__stars" aria-hidden="true">
+              <svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg>
+            </span>
+            <strong>4.9 / 5</strong>
+            <span class="rating__note">average across 30+ monthly clients</span>
+          </div>
+        </div>
+
+        <div class="marquee" data-marquee>
+          <div class="marquee__track" id="reviewTrack">
+            <article class="review">
+              <div class="review__top">
+                <span class="review__stars" role="img" aria-label="5 out of 5 stars">
+                  <svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg>
+                </span>
+                <span class="review__verified"><svg class="icon"><use href="#i-check"></use></svg> Verified</span>
+              </div>
+              <p>“Clean and fast edit, captions and effects were on point. Got it done in less than an hour.”</p>
+              <div class="review__foot">
+                <span class="review__avatar">🎬</span>
+                <div><strong>LMGX</strong><span>Content Creator</span></div>
+              </div>
+            </article>
+
+            <article class="review">
+              <div class="review__top">
+                <span class="review__stars" role="img" aria-label="5 out of 5 stars">
+                  <svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg>
+                </span>
+                <span class="review__verified"><svg class="icon"><use href="#i-check"></use></svg> Verified</span>
+              </div>
+              <p>“HIGH quality edit, finished it in like 5 mins. Clean, professional and a hell of a lot FAST!”</p>
+              <div class="review__foot">
+                <span class="review__avatar">⚡</span>
+                <div><strong>Morgan</strong><span>Content Creator</span></div>
+              </div>
+            </article>
+
+            <article class="review">
+              <div class="review__top">
+                <span class="review__stars" role="img" aria-label="5 out of 5 stars">
+                  <svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg>
+                </span>
+                <span class="review__verified"><svg class="icon"><use href="#i-check"></use></svg> Verified</span>
+              </div>
+              <p>“Nice edits, fast worker, very good service. Would happily come back for more.”</p>
+              <div class="review__foot">
+                <span class="review__avatar">🍋</span>
+                <div><strong>LemonGuy</strong><span>Brand Owner</span></div>
+              </div>
+            </article>
+
+            <article class="review">
+              <div class="review__top">
+                <span class="review__stars" role="img" aria-label="5 out of 5 stars">
+                  <svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg>
+                </span>
+                <span class="review__verified"><svg class="icon"><use href="#i-check"></use></svg> Verified</span>
+              </div>
+              <p>“Smooth captions and crazy retention. Would recommend Minhaj Motion 100%.”</p>
+              <div class="review__foot">
+                <span class="review__avatar">🎵</span>
+                <div><strong>Bullo</strong><span>Music Producer</span></div>
+              </div>
+            </article>
+
+            <article class="review">
+              <div class="review__top">
+                <span class="review__stars" role="img" aria-label="5 out of 5 stars">
+                  <svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg>
+                </span>
+                <span class="review__verified"><svg class="icon"><use href="#i-check"></use></svg> Verified</span>
+              </div>
+              <p>“Perfectly cut my long-form podcast into viral clips. Great work!”</p>
+              <div class="review__foot">
+                <span class="review__avatar">🎙️</span>
+                <div><strong>Carl J.</strong><span>Podcaster</span></div>
+              </div>
+            </article>
+
+            <article class="review">
+              <div class="review__top">
+                <span class="review__stars" role="img" aria-label="5 out of 5 stars">
+                  <svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg>
+                </span>
+                <span class="review__verified"><svg class="icon"><use href="#i-check"></use></svg> Verified</span>
+              </div>
+              <p>“Perfect videos, fast edits, and high retention / sub conversion.”</p>
+              <div class="review__foot">
+                <span class="review__avatar">🚀</span>
+                <div><strong>Matty</strong><span>Content Creator</span></div>
+              </div>
+            </article>
+
+            <article class="review">
+              <div class="review__top">
+                <span class="review__stars" role="img" aria-label="5 out of 5 stars">
+                  <svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg>
+                </span>
+                <span class="review__verified"><svg class="icon"><use href="#i-check"></use></svg> Verified</span>
+              </div>
+              <p>“Edited a step-by-step cooking vid for me. Great service and super fast.”</p>
+              <div class="review__foot">
+                <span class="review__avatar">👨‍🍳</span>
+                <div><strong>Yeesh</strong><span>Chef</span></div>
+              </div>
+            </article>
+
+            <article class="review">
+              <div class="review__top">
+                <span class="review__stars" role="img" aria-label="5 out of 5 stars">
+                  <svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg><svg class="icon"><use href="#i-star"></use></svg>
+                </span>
+                <span class="review__verified"><svg class="icon"><use href="#i-check"></use></svg> Verified</span>
+              </div>
+              <p>“Very good edit, bro cooked frfr 🔥. Will be back for more.”</p>
+              <div class="review__foot">
+                <span class="review__avatar">🎮</span>
+                <div><strong>Pibbs</strong><span>Gamer</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ Pricing ============================ -->
+      <section class="section section--line pricing" id="pricing">
+        <div class="container">
+          <div class="section-head section-head--center reveal">
+            <span class="eyebrow">— Pricing</span>
+            <h2>Custom pricing for every creator</h2>
+            <p>Reach out and let's tailor a package that fits your content goals.</p>
+          </div>
+
+          <div class="pricing__panel reveal" data-delay="1">
+            <div class="pricing__copy">
+              <div class="pricing__pills">
+                <span class="pill pill--ghost">Short-form</span>
+                <span class="pill pill--ghost">Long-form</span>
+                <span class="pill pill--ghost">Motion graphics</span>
+                <span class="pill pill--ghost">Thumbnails</span>
+              </div>
+              <h3>Tell me the goal.<br />I'll build the edit.</h3>
+              <p>
+                Pay per project or lock in a monthly slot. Every quote is based on length,
+                complexity and turnaround — no generic packages, no wasted spend.
+              </p>
+              <a class="btn btn--solid" href="#contact">Get in touch <svg class="icon"><use href="#i-arrow"></use></svg></a>
+              <p class="pricing__note"><span class="dot-live"></span> Replies within 24 hours · No retainers required</p>
+            </div>
+
+            <div class="pricing__list">
+              <h4>Every project includes</h4>
+              <ul class="checklist">
+                <li><svg class="icon"><use href="#i-check"></use></svg> Hook-first script polish &amp; story structure</li>
+                <li><svg class="icon"><use href="#i-check"></use></svg> Custom captions, sound design &amp; SFX</li>
+                <li><svg class="icon"><use href="#i-check"></use></svg> Motion graphics, transitions &amp; titles</li>
+                <li><svg class="icon"><use href="#i-check"></use></svg> Platform-ready exports — 9:16, 1:1, 16:9</li>
+                <li><svg class="icon"><use href="#i-check"></use></svg> Two rounds of revisions</li>
+                <li><svg class="icon"><use href="#i-check"></use></svg> Project files &amp; source on request</li>
+              </ul>
+              <div class="pricing__quote">
+                <span>Most projects start at</span>
+                <strong>$120<span>/video</span></strong>
+                <span class="pricing__quote-note">Final quote depends on scope.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ FAQ ============================ -->
+      <section class="section faq" id="faq">
+        <div class="container">
+          <div class="section-head section-head--center reveal">
+            <span class="eyebrow">— FAQ</span>
+            <h2>Frequently asked questions</h2>
+            <p>Answers to common questions about my services, process and delivery.</p>
+          </div>
+
+          <div class="faq__grid">
+            <div class="faq__col reveal">
+              <div class="faq__col-head">
+                <span class="pill pill--ghost pill--micro">The process</span>
+              </div>
+
+              <details class="faq-item">
+                <summary>
+                  <span>What types of videos do you edit?</span>
+                  <span class="faq-item__icon"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                </summary>
+                <div class="faq-item__body">
+                  <p>
+                    Short-form for TikTok, Reels and YouTube Shorts, long-form YouTube and podcast
+                    cuts, plus motion graphics, captions and thumbnails. If it lives on a screen,
+                    I can probably cut it.
+                  </p>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary>
+                  <span>What do you need to get started?</span>
+                  <span class="faq-item__icon"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                </summary>
+                <div class="faq-item__body">
+                  <p>
+                    Raw footage or a link, your goal for the video, any title or hook direction, and
+                    a reference or two for pacing and style. That's it — I'll handle the rest.
+                  </p>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary>
+                  <span>How does pricing work?</span>
+                  <span class="faq-item__icon"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                </summary>
+                <div class="faq-item__body">
+                  <p>
+                    Projects are quoted by length, complexity and turnaround. Monthly creator packages
+                    are available for a set number of videos per month — usually the best value if
+                    you post consistently.
+                  </p>
+                </div>
+              </details>
+            </div>
+
+            <div class="faq__col reveal" data-delay="1">
+              <div class="faq__col-head">
+                <span class="pill pill--ghost pill--micro">Delivery &amp; revisions</span>
+              </div>
+
+              <details class="faq-item">
+                <summary>
+                  <span>How fast is the turnaround?</span>
+                  <span class="faq-item__icon"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                </summary>
+                <div class="faq-item__body">
+                  <p>
+                    Short-form edits usually land in 24–48 hours. Longer videos and motion-heavy
+                    projects depend on scope, but you'll always get a clear deadline before we start.
+                  </p>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary>
+                  <span>How do revisions work?</span>
+                  <span class="faq-item__icon"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                </summary>
+                <div class="faq-item__body">
+                  <p>
+                    Every project includes two rounds of revisions. Timestamped feedback in one message
+                    keeps things fast — larger scope changes are quoted separately before any extra work.
+                  </p>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary>
+                  <span>Do you offer monthly retainers?</span>
+                  <span class="faq-item__icon"><svg class="icon"><use href="#i-plus"></use></svg></span>
+                </summary>
+                <div class="faq-item__body">
+                  <p>
+                    Yes. Monthly slots are limited and prioritised for creators posting weekly.
+                    You get consistent turnaround, a shared project space and priority scheduling.
+                  </p>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="faq__cta reveal">
+            <div>
+              <span class="eyebrow">Still curious?</span>
+              <h3>Still have a question?</h3>
+              <p>Send it over — I answer every message personally, usually within a day.</p>
+            </div>
+            <a class="btn btn--solid" href="mailto:clipzymediaco@gmail.com?subject=Project%20question">Ask a question <svg class="icon"><use href="#i-arrow"></use></svg></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ Contact ============================ -->
+      <section class="section section--line contact" id="contact">
+        <div class="container">
+          <div class="section-head section-head--center reveal">
+            <span class="eyebrow">— Contact</span>
+            <h2>Let's connect &amp; create</h2>
+            <p>Reach out through any of the channels below — I respond within 24 hours.</p>
+          </div>
+
+          <div class="contact__grid">
+            <a class="contact-card reveal" data-delay="1" data-pixel-card data-pixel-gap="7" data-pixel-speed="26" data-pixel-opacity="0.55" data-pixel-fade="0.55" data-pixel-glow="0.32" data-pixel-spotlight="0.5" data-pixel-reveal="650" data-pixel-intro-delay="0" href="https://discordapp.com/users/1046281961305542677" target="_blank" rel="noopener noreferrer">
+              <canvas class="pixel-card__canvas" aria-hidden="true"></canvas>
+              <div class="contact-card__top">
+                <span class="contact-card__icon"><svg class="icon"><use href="#i-discord"></use></svg></span>
+                <svg class="icon contact-card__arrow"><use href="#i-arrow"></use></svg>
+              </div>
+              <h3>Discord</h3>
+              <p>Quickest reply</p>
+              <span class="contact-card__handle">@minhajmotion</span>
+            </a>
+
+            <a class="contact-card reveal" data-delay="2" data-pixel-card data-pixel-gap="7" data-pixel-speed="30" data-pixel-opacity="0.55" data-pixel-fade="0.55" data-pixel-glow="0.32" data-pixel-spotlight="0.5" data-pixel-reveal="700" data-pixel-intro-delay="130" href="https://www.instagram.com/clipzy.media__/?hl=en" target="_blank" rel="noopener noreferrer">
+              <canvas class="pixel-card__canvas" aria-hidden="true"></canvas>
+              <div class="contact-card__top">
+                <span class="contact-card__icon"><svg class="icon"><use href="#i-instagram"></use></svg></span>
+                <svg class="icon contact-card__arrow"><use href="#i-arrow"></use></svg>
+              </div>
+              <h3>Instagram</h3>
+              <p>DMs are open</p>
+              <span class="contact-card__handle">@minhaj.motions</span>
+            </a>
+
+            <div class="contact-card reveal" data-delay="3" data-pixel-card data-pixel-gap="7" data-pixel-speed="23" data-pixel-opacity="0.55" data-pixel-fade="0.55" data-pixel-glow="0.32" data-pixel-spotlight="0.5" data-pixel-reveal="620" data-pixel-intro-delay="260">
+              <canvas class="pixel-card__canvas" aria-hidden="true"></canvas>
+              <div class="contact-card__top">
+                <span class="contact-card__icon"><svg class="icon"><use href="#i-mail"></use></svg></span>
+                <a class="icon-btn" href="mailto:clipzymediaco@gmail.com" aria-label="Email Minhaj">
+                  <svg class="icon"><use href="#i-arrow"></use></svg>
+                </a>
+              </div>
+              <h3>Email</h3>
+              <p>For briefs &amp; quotes</p>
+              <div class="contact-card__email">
+                <a href="mailto:clipzymediaco@gmail.com" class="contact-card__handle">clipzymediaco@gmail.com</a>
+                <button class="icon-btn" type="button" data-copy="clipzymediaco@gmail.com" aria-label="Copy email address" title="Copy email address">
+                  <svg class="icon"><use href="#i-copy"></use></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <p class="contact__note reveal">
+            <span class="dot-live"></span> Currently booking 2 new projects for November · Remote, worldwide
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================ Footer ============================ -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__top">
+          <a class="brand" href="#top">
+            <img src="assets/img/logo.png" alt="" width="24" height="24" />
+            <span class="brand__name">MINHAJ MOTION</span>
+            <span class="visually-hidden">— back to top</span>
+          </a>
+          <nav class="site-footer__nav" aria-label="Footer">
+            <a href="#top">Home</a>
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="#testimonials">Reviews</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <div class="site-footer__social">
+            <a href="https://www.instagram.com/clipzy.media__/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"></use></svg></a>
+            <a href="https://discordapp.com/users/1046281961305542677" target="_blank" rel="noopener noreferrer" aria-label="Discord"><svg class="icon"><use href="#i-discord"></use></svg></a>
+            <a href="mailto:clipzymediaco@gmail.com" aria-label="Email"><svg class="icon"><use href="#i-mail"></use></svg></a>
+          </div>
+        </div>
+
+        <div class="site-footer__mark" id="footerMark" aria-hidden="true">MINHAJ MOTION</div>
+
+        <div class="site-footer__bottom">
+          <p>© <span id="year">2026</span> Minhaj Motion. Crafted to go viral.</p>
+          <p class="site-footer__meta">Short-form · Long-form · Motion</p>
+          <a class="site-footer__top-link" href="#top">Back to top <svg class="icon"><use href="#i-chevron"></use></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ============================ Lightbox ============================ -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player" hidden>
+      <div class="lightbox__backdrop" data-close></div>
+      <div class="lightbox__dialog">
+        <div class="lightbox__bar">
+          <div class="lightbox__meta">
+            <span class="lightbox__cat" id="lbCat">Short-form</span>
+            <h3 id="lbTitle">Project</h3>
+          </div>
+          <div class="lightbox__controls">
+            <span class="lightbox__count" id="lbCount">01 / 12</span>
+            <button class="lightbox__btn" type="button" id="lbPrev" aria-label="Previous video"><svg class="icon lightbox__flip"><use href="#i-chevron"></use></svg></button>
+            <button class="lightbox__btn" type="button" id="lbNext" aria-label="Next video"><svg class="icon"><use href="#i-chevron"></use></svg></button>
+            <button class="lightbox__btn lightbox__btn--close" type="button" data-close aria-label="Close video player"><svg class="icon"><use href="#i-close"></use></svg></button>
+          </div>
+        </div>
+        <div class="lightbox__stage">
+          <video id="lbVideo" controls playsinline preload="metadata" controlsList="nodownload noplaybackrate noremoteplayback" disablepictureinpicture disableremoteplayback></video>
+        </div>
+        <div class="lightbox__foot">
+          <span id="lbDuration">0:00</span>
+          <span>Minhaj Motion — 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <div class="grain" aria-hidden="true"></div>
+
+    <script src="light-rays.js"></script>
+    <script src="pixel-card.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
