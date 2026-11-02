@@ -9,6 +9,24 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+  /* ---------------------------------------------------------------- Hero reel */
+  const heroReel = $(".macbook__video");
+  if (heroReel) {
+    if (reducedMotion) {
+      heroReel.removeAttribute("autoplay");
+      heroReel.pause();
+    }
+    const syncHeroReel = () => {
+      if (document.hidden) {
+        heroReel.pause();
+      } else if (!reducedMotion) {
+        heroReel.play().catch(() => {});
+      }
+    };
+    document.addEventListener("visibilitychange", syncHeroReel);
+    window.addEventListener("load", syncHeroReel);
+  }
+
   /* --------------------------------------------------------------- Intro loader */
   (function initIntro() {
     const root = document.documentElement;
@@ -133,156 +151,19 @@
     $$("a", mobileMenu).forEach((a) => a.addEventListener("click", closeMenu));
   }
 
-  /* ------------------------------------------------------- Infinite video rail */
-  const railData = [
-    {
-      speed: 74,
-      dir: "left",
-      items: [
-        ["short-01", "Short-form", "0:51", "Skincare hook"],
-        ["motion-03", "Motion", "0:08", "Logo reveal"],
-        ["short-05", "Short-form", "1:00", "Fitness series"],
-        ["short-07", "Short-form", "0:35", "Studio vlog"],
-        ["short-02", "Short-form", "0:13", "Travel montage"],
-        ["short-06", "Short-form", "0:40", "Recipe short"],
-        ["motion-04", "Motion", "0:17", "Brand sting"],
-      ],
-    },
-    {
-      speed: 92,
-      dir: "right",
-      items: [
-        ["short-03", "Long-form", "1:44", "Podcast clips"],
-        ["short-04", "Short-form", "0:23", "Product demo"],
-        ["short-08", "Short-form", "1:00", "Gaming highlight"],
-        ["motion-03", "Motion", "0:08", "Logo reveal"],
-        ["short-01", "Short-form", "0:51", "Skincare hook"],
-        ["short-06", "Short-form", "0:40", "Recipe short"],
-        ["motion-04", "Motion", "0:17", "Brand sting"],
-      ],
-    },
-    {
-      speed: 82,
-      dir: "left",
-      items: [
-        ["motion-04", "Motion", "0:17", "Brand sting"],
-        ["short-08", "Short-form", "1:00", "Gaming highlight"],
-        ["short-06", "Short-form", "0:40", "Recipe short"],
-        ["short-07", "Short-form", "0:35", "Studio vlog"],
-        ["short-02", "Short-form", "0:13", "Travel montage"],
-        ["short-03", "Long-form", "1:44", "Podcast clips"],
-        ["short-05", "Short-form", "1:00", "Fitness series"],
-      ],
-    },
-  ];
-
-  function reelCardHTML(item, duplicate) {
-    const [id, cat, dur, title] = item;
-    const poster = "assets/posters/" + id + ".jpg";
-    const src = "assets/videos/" + id + ".mp4";
-    return (
-      '<button class="reel-card" type="button" data-lightbox data-gallery="reel"' +
-      ' data-src="' + src + '"' +
-      ' data-poster="' + poster + '"' +
-      ' data-title="' + title + '"' +
-      ' data-category="' + cat + '"' +
-      ' data-duration="' + dur + '"' +
-      ' data-orientation="portrait"' +
-      (duplicate ? ' aria-hidden="true" tabindex="-1"' : "") +
-      ">" +
-      '<img class="reel-card__poster" src="' + poster + '" alt="" loading="lazy" decoding="async">' +
-      '<video class="reel-card__video" muted loop playsinline preload="none" data-preview="' + src + '" aria-hidden="true"></video>' +
-      '<span class="reel-card__shade"></span>' +
-      '<span class="reel-card__chip">' + cat + "</span>" +
-      '<span class="reel-card__dur">' + dur + "</span>" +
-      '<span class="reel-card__bottom"><span class="reel-card__label">' + title + "</span>" +
-      '<span class="reel-card__play"><svg class="icon"><use href="#i-play"></use></svg></span></span>' +
-      "</button>"
-    );
-  }
-
-  const railRoot = $("#reelRail");
-  if (railRoot) {
-    railRoot.innerHTML = railData
-      .map((row) => {
-        const cards = row.items.map((item) => reelCardHTML(item, false)).join("");
-        const dupes = row.items.map((item) => reelCardHTML(item, true)).join("");
-        return (
-          '<div class="reel__row" data-dir="' + row.dir + '">' +
-          '<div class="reel__track" style="animation-duration:' + row.speed + 's">' +
-          cards +
-          dupes +
-          "</div></div>"
-        );
-      })
-      .join("");
-  }
-
-  // Pause the loops when the rail is off screen.
-  const reel = $(".reel");
-  if (reel && "IntersectionObserver" in window) {
-    const railObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => reel.classList.toggle("is-off", !entry.isIntersecting));
-      },
-      { rootMargin: "100px" }
-    );
-    railObserver.observe(reel);
-  }
-
-  /* ------------------------------------------------ Preview on hover (muted) */
-  function bindPreview(container) {
-    if (!canHover || container.dataset.previewBound) return;
-    const video = $("video[data-preview]", container);
-    if (!video) return;
-    container.dataset.previewBound = "1";
-    let playToken = 0;
-
-    const start = () => {
-      const token = ++playToken;
-      if (!video.getAttribute("src")) {
-        video.src = video.dataset.preview;
-        video.load();
-      }
-      const attempt = video.play();
-      if (attempt && typeof attempt.then === "function") {
-        attempt.catch(() => {});
-      }
-      if (token === playToken) container.classList.add("is-playing");
-    };
-
-    const stop = () => {
-      playToken++;
-      video.pause();
-      try {
-        video.currentTime = 0;
-      } catch (e) {}
-      container.classList.remove("is-playing");
-    };
-
-    container.addEventListener("mouseenter", start);
-    container.addEventListener("mouseleave", stop);
-    container.addEventListener("focusout", stop);
-  }
-
   // Orientation + gallery metadata for the lightbox.
   const showreelMedia = $(".showreel__media");
   if (showreelMedia) {
     showreelMedia.dataset.orientation = "landscape";
     showreelMedia.dataset.gallery = "showreel";
   }
-  $$(".work-card__media").forEach((media) => {
-    const wide = media.closest(".work-card--wide");
-    media.dataset.orientation = wide ? "landscape" : "portrait";
-    media.dataset.gallery = "work";
-  });
 
   /* ------------------------------------------------------------------ Header */
   const header = $("#siteHeader");
   const progress = $(".scroll-progress span");
   const heroGhost = $(".hero__ghost");
   const navLinks = $$(".site-nav a[data-nav]");
-  const sectionIds = ["top", "work", "about", "testimonials", "pricing", "faq", "contact"];
+  const sectionIds = ["top", "work", "about", "testimonials", "faq", "contact"];
   let ticking = false;
 
   function onScroll() {
@@ -419,47 +300,7 @@
   }
 
   fillMarquee($(".ticker-track"));
-  $$(".reel__track").forEach(fillMarquee);
   fillMarquee(reviewTrack);
-  $$(".reel-card").forEach(bindPreview);
-  $$(".work-card").forEach(bindPreview);
-
-  /* ----------------------------------------------------------------- Filters */
-  const filterButtons = $$(".filter");
-  const workCards = $$(".work-card");
-
-  filterButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const filter = btn.dataset.filter || "all";
-      filterButtons.forEach((b) => {
-        const active = b === btn;
-        b.classList.toggle("is-active", active);
-        b.setAttribute("aria-pressed", active ? "true" : "false");
-      });
-
-      workCards.forEach((card) => {
-        const show = filter === "all" || card.dataset.cat === filter;
-        if (card._hideTimer) {
-          window.clearTimeout(card._hideTimer);
-          card._hideTimer = null;
-        }
-        if (show) {
-          card.classList.remove("is-hidden");
-          card.classList.add("is-filtering");
-          window.requestAnimationFrame(() => {
-            window.requestAnimationFrame(() => card.classList.remove("is-filtering"));
-          });
-        } else {
-          card.classList.add("is-filtering");
-          card._hideTimer = window.setTimeout(() => {
-            card.classList.add("is-hidden");
-            card.classList.remove("is-filtering");
-            card._hideTimer = null;
-          }, 200);
-        }
-      });
-    });
-  });
 
   /* ---------------------------------------------------------------- Lightbox */
   const lightbox = $("#lightbox");
@@ -512,6 +353,7 @@
       : items();
     const index = gallery.indexOf(item);
     current = index < 0 ? 0 : index;
+    lightbox.classList.toggle("is-single", gallery.length <= 1);
     lastFocused = document.activeElement;
     lightbox.hidden = false;
     document.body.classList.add("no-scroll");
@@ -743,9 +585,7 @@
     if (resizeTimer) window.clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(() => {
       fillMarquee($(".ticker-track"));
-      $$(".reel__track").forEach(fillMarquee);
       fillMarquee(reviewTrack);
-      $$(".reel-card").forEach(bindPreview);
     }, 250);
   });
 

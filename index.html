@@ -19,7 +19,8 @@
     <meta property="og:image" content="assets/posters/showreel.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="assets/img/logo.png" />
-    <link rel="preload" href="assets/fonts/SequelSansBoldDisp2.woff" as="font" type="font/woff" crossorigin />
+    <link rel="preload" href="assets/fonts/CreatoDisplay-Black.woff" as="font" type="font/woff" crossorigin />
+    <link rel="preload" href="assets/fonts/CreatoDisplay-Bold.woff" as="font" type="font/woff" crossorigin />
     <link rel="preload" href="assets/fonts/SequelSansRomanBody2.woff" as="font" type="font/woff" crossorigin />
     <link rel="stylesheet" href="styles.css" />
     <script>
@@ -160,9 +161,10 @@
           <ul>
             <li><a href="#top" data-nav>Home</a></li>
             <li><a href="#work" data-nav>Showreel</a></li>
+            <li><a href="short-form.html">Short-form</a></li>
+            <li><a href="long-form.html">Long-form</a></li>
             <li><a href="#about" data-nav>About</a></li>
             <li><a href="#testimonials" data-nav>Reviews</a></li>
-            <li><a href="#pricing" data-nav>Pricing</a></li>
             <li><a href="#faq" data-nav>FAQ</a></li>
             <li><a href="#contact" data-nav>Contact</a></li>
           </ul>
@@ -188,10 +190,10 @@
         <nav class="container" aria-label="Mobile">
           <a href="#top">Home <span>01</span></a>
           <a href="#work">Showreel <span>02</span></a>
-          <a href="#work">Selected work <span>03</span></a>
-          <a href="#about">About <span>04</span></a>
-          <a href="#testimonials">Reviews <span>05</span></a>
-          <a href="#pricing">Pricing <span>06</span></a>
+          <a href="short-form.html">Short-form <span>03</span></a>
+          <a href="long-form.html">Long-form <span>04</span></a>
+          <a href="#about">About <span>05</span></a>
+          <a href="#testimonials">Reviews <span>06</span></a>
           <a href="#faq">FAQ <span>07</span></a>
           <a href="#contact">Contact <span>08</span></a>
         </nav>
@@ -205,104 +207,83 @@
     <main>
       <!-- ============================ Hero ============================ -->
       <section class="hero" id="top">
-        <div
-          class="hero__rays"
-          data-light-rays
-          data-rays-origin="top-center"
-          data-rays-color="#ffffff"
-          data-rays-light-color="#7c6f59"
-          data-rays-speed="0.72"
-          data-rays-spread="0.58"
-          data-rays-length="1.55"
-          data-rays-density="1.05"
-          data-rays-sharpness="0.3"
-          data-rays-glow="0.52"
-          data-rays-haze="0.34"
-          data-rays-atmosphere="0.55"
-          data-rays-intensity="0.88"
-          data-rays-fade="1.1"
-          data-rays-saturation="0.7"
-          data-rays-influence="0.12"
-          data-rays-noise="0.02"
-          data-rays-distortion="0.08"
-          data-rays-opacity="0.7"
-          data-rays-light-opacity="0.3"
-          data-rays-max-ratio="1.6"
-          aria-hidden="true"
-        >
-          <canvas></canvas>
-        </div>
-        <div class="hero__ghost" aria-hidden="true">MINHAJ MOTION</div>
-
-        <div class="hero__ticker" aria-hidden="true">
-          <div class="ticker-track">
-            <span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span><span>MINHAJ MOTION <i>/</i></span>
-          </div>
-        </div>
-
+        <div class="hero__bg" aria-hidden="true"></div>
         <div class="container hero__inner">
-          <div class="hero__grid">
+          <div class="hero__stage">
             <div class="hero__copy">
-              <div class="hero__pillrow">
-                <span class="pill pill--dot"><i></i> Available for projects</span>
-                <span class="pill pill--ghost">
-                  <svg class="icon"><use href="#i-spark"></use></svg>
-                  Booking November
-                </span>
-              </div>
+              <span class="pill pill--dot"><i></i> Video editor &amp; motion designer</span>
 
-              <h1 class="hero__title">
-                <span class="hero__line"><span>Short-Form Editor</span></span>
-                <span class="hero__line"><span><em>&amp;</em> Long-Form Content</span></span>
+              <h1 class="hero__title hero__title--big">
+                <span class="hero__word">MAKE</span>
+                <span class="hero__word">THEM</span>
+                <span class="hero__word">WATCH<span class="hero__dot">.</span></span>
               </h1>
 
-              <p class="hero__lead">
-                Crafting scroll-stopping edits designed for attention.
-                Over <strong>5M+ views</strong> generated.
+              <p class="hero__sub">
+                Short-form, long-form and motion edits built to hold attention.
               </p>
 
-              <div class="hero__stats">
-                <div><strong>5M+</strong><span>views generated</span></div>
-                <div><strong>30+</strong><span>creators monthly</span></div>
-                <div><strong>24h</strong><span>avg. turnaround</span></div>
-              </div>
-            </div>
-
-            <div class="hero__aside">
               <div class="hero__actions">
-                <a class="btn btn--solid" href="#work">
-                  View work
-                  <svg class="icon"><use href="#i-arrow"></use></svg>
-                </a>
-                <a class="btn btn--ghost" href="#contact">
+                <button
+                  class="btn btn--solid btn--hero"
+                  type="button"
+                  data-lightbox
+                  data-gallery="hero-reel"
+                  data-src="assets/videos/showreel.mp4"
+                  data-poster="assets/posters/showreel.jpg"
+                  data-title="2026 Showreel"
+                  data-category="Showreel"
+                  data-duration="0:20"
+                  data-orientation="landscape"
+                >
+                  <svg class="icon"><use href="#i-play"></use></svg>
+                  <span class="btn__label">Watch Showreel</span>
+                </button>
+                <a class="btn btn--ghost btn--hero" href="#contact">
                   <svg class="icon"><use href="#i-mail"></use></svg>
-                  Contact me
+                  <span class="btn__label">Start a Project</span>
                 </a>
               </div>
-              <p class="hero__meta">Based remote <span>·</span> Worldwide</p>
-              <div class="hero__slots">
-                <span class="hero__slots-dot" aria-hidden="true"></span>
-                <span><strong>2 slots</strong> open for new projects</span>
+            </div>
+
+            <div class="hero__device">
+              <div class="macbook" role="img" aria-label="Minhaj Motion showreel playing on a MacBook Pro">
+                <div class="macbook__lid">
+                  <div class="macbook__bezel">
+                    <span class="macbook__camera" aria-hidden="true"></span>
+                    <div class="macbook__screen">
+                      <video
+                        class="macbook__video"
+                        src="assets/videos/showreel.mp4"
+                        poster="assets/posters/showreel.jpg"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="metadata"
+                        tabindex="-1"
+                        aria-hidden="true"
+                      ></video>
+                      <div class="macbook__ui" aria-hidden="true">
+                        <span class="macbook__brand">MINHAJ MOTION</span>
+                        <span class="macbook__status"><i></i> SHOWREEL &rsquo;26</span>
+                      </div>
+                      <span class="macbook__glare" aria-hidden="true"></span>
+                    </div>
+                    <span class="macbook__label" aria-hidden="true">MacBook Pro</span>
+                  </div>
+                </div>
+                <div class="macbook__base">
+                  <span class="macbook__notch" aria-hidden="true"></span>
+                  <span class="macbook__foot" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div class="hero__device-caption" aria-hidden="true">
+                <span>Showreel &rsquo;26</span>
+                <span>00:20 &middot; muted loop</span>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Infinite video rails -->
-        <div class="reel" aria-label="Recent edits preview">
-          <div class="container reel__head">
-            <div class="reel__title">
-              <span class="eyebrow">— On loop</span>
-              <span class="reel__hint">Recent edits <span>·</span> Hover to preview, click to watch</span>
-            </div>
-            <span class="pill pill--micro"><span class="reel__inf">∞</span> 3 rows · endless scroll</span>
-          </div>
-          <div class="reel__rail" id="reelRail"></div>
-        </div>
-
-        <div class="hero__scroll">
-          <span>Scroll</span>
-          <svg class="icon"><use href="#i-chevron"></use></svg>
         </div>
       </section>
 
@@ -316,7 +297,7 @@
           </div>
 
           <div class="showreel reveal" data-delay="1">
-            <button class="showreel__media" type="button" data-lightbox data-src="assets/videos/showreel.mp4" data-poster="assets/posters/showreel.jpg" data-title="2026 Showreel" data-category="Showreel" data-duration="0:20">
+            <button class="showreel__media" type="button" data-lightbox data-gallery="showreel" data-src="assets/videos/showreel.mp4" data-poster="assets/posters/showreel.jpg" data-title="2026 Showreel" data-category="Showreel" data-duration="0:20">
               <img src="assets/posters/showreel.jpg" alt="Minhaj Motion showreel cover" />
               <span class="showreel__shade" aria-hidden="true"></span>
               <span class="showreel__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
@@ -331,172 +312,6 @@
             </div>
           </div>
 
-          <div class="work-block">
-            <div class="work-head reveal">
-              <div>
-                <span class="eyebrow">— Selected work</span>
-                <h3 class="work-head__title">Edits that hold attention</h3>
-              </div>
-              <div class="filters" role="group" aria-label="Filter work">
-                <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">All <span>10</span></button>
-                <button class="filter" type="button" data-filter="short" aria-pressed="false">Short-form <span>4</span></button>
-                <button class="filter" type="button" data-filter="long" aria-pressed="false">Long-form <span>2</span></button>
-                <button class="filter" type="button" data-filter="motion" aria-pressed="false">Motion <span>4</span></button>
-              </div>
-            </div>
-
-            <div class="work-grid" id="workGrid">
-              <article class="work-card" data-cat="short" data-delay="1">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-01.mp4" data-poster="assets/posters/short-01.jpg" data-title="Skincare hook — creator series" data-category="Short-form" data-duration="0:51"><span class="visually-hidden">Skincare hook</span>
-                  <img src="assets/posters/short-01.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-01.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Short-form</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">0:51</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>Skincare hook</h4>
-                  <span>1.2M views</span>
-                </div>
-              </article>
-
-              <article class="work-card work-card--wide" data-cat="motion" data-delay="2">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-02.mp4" data-poster="assets/posters/motion-02.jpg" data-title="SaaS launch — product film" data-category="Motion graphics" data-duration="0:41"><span class="visually-hidden">SaaS launch</span>
-                  <img src="assets/posters/motion-02.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-02.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Motion graphics</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">0:41</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>SaaS launch</h4>
-                  <span>820K views</span>
-                </div>
-              </article>
-
-              <article class="work-card" data-cat="long" data-delay="3">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-03.mp4" data-poster="assets/posters/short-03.jpg" data-title="Podcast clip pack — long-form to shorts" data-category="Long-form" data-duration="1:44"><span class="visually-hidden">Podcast clip pack</span>
-                  <img src="assets/posters/short-03.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-03.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Long-form</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">1:44</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>Podcast clip pack</h4>
-                  <span>2.4M views</span>
-                </div>
-              </article>
-
-              <article class="work-card" data-cat="motion" data-delay="1">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-04.mp4" data-poster="assets/posters/motion-04.jpg" data-title="Brand sting — identity in motion" data-category="Motion graphics" data-duration="0:17"><span class="visually-hidden">Brand sting</span>
-                  <img src="assets/posters/motion-04.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-04.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Motion graphics</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">0:17</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>Brand sting</h4>
-                  <span>640K views</span>
-                </div>
-              </article>
-
-              <article class="work-card" data-cat="short" data-delay="2">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-05.mp4" data-poster="assets/posters/short-05.jpg" data-title="Fitness series — retention edit" data-category="Short-form" data-duration="1:00"><span class="visually-hidden">Fitness series</span>
-                  <img src="assets/posters/short-05.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-05.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Short-form</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">1:00</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>Fitness series</h4>
-                  <span>1.8M views</span>
-                </div>
-              </article>
-
-              <article class="work-card" data-cat="motion" data-delay="3">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-03.mp4" data-poster="assets/posters/motion-03.jpg" data-title="Logo animation — brand reveal" data-category="Motion graphics" data-duration="0:08"><span class="visually-hidden">Logo animation</span>
-                  <img src="assets/posters/motion-03.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-03.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Motion graphics</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">0:08</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>Logo animation</h4>
-                  <span>300K views</span>
-                </div>
-              </article>
-
-              <article class="work-card work-card--wide" data-cat="long" data-delay="1">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/longform-01.mp4" data-poster="assets/posters/longform-01.jpg" data-title="Documentary cut — long-form storytelling" data-category="Long-form" data-duration="0:12"><span class="visually-hidden">Documentary cut</span>
-                  <img src="assets/posters/longform-01.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/longform-01.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Long-form</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">0:12</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>Documentary cut</h4>
-                  <span>480K views</span>
-                </div>
-              </article>
-
-              <article class="work-card" data-cat="short" data-delay="2">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-08.mp4" data-poster="assets/posters/short-08.jpg" data-title="Gaming highlight — punch-in edit" data-category="Short-form" data-duration="1:00"><span class="visually-hidden">Gaming highlight</span>
-                  <img src="assets/posters/short-08.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-08.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Short-form</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">1:00</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>Gaming highlight</h4>
-                  <span>900K views</span>
-                </div>
-              </article>
-
-              <article class="work-card" data-cat="motion" data-delay="3">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-01.mp4" data-poster="assets/posters/motion-01.jpg" data-title="Product teaser — type in motion" data-category="Motion graphics" data-duration="0:11"><span class="visually-hidden">Product teaser</span>
-                  <img src="assets/posters/motion-01.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-01.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Motion graphics</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">0:11</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>Product teaser</h4>
-                  <span>520K views</span>
-                </div>
-              </article>
-
-              <article class="work-card" data-cat="short" data-delay="1">
-                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-06.mp4" data-poster="assets/posters/short-06.jpg" data-title="Recipe short — step-by-step edit" data-category="Short-form" data-duration="0:40"><span class="visually-hidden">Recipe short</span>
-                  <img src="assets/posters/short-06.jpg" alt="" loading="lazy" />
-                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-06.mp4" aria-hidden="true"></video>
-                  <span class="work-card__shade" aria-hidden="true"></span>
-                  <span class="work-card__badge">Short-form</span>
-                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
-                  <span class="work-card__dur">0:40</span>
-                </button>
-                <div class="work-card__meta">
-                  <h4>Recipe short</h4>
-                  <span>1.1M views</span>
-                </div>
-              </article>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -754,52 +569,6 @@
         </div>
       </section>
 
-      <!-- ============================ Pricing ============================ -->
-      <section class="section section--line pricing" id="pricing">
-        <div class="container">
-          <div class="section-head section-head--center reveal">
-            <span class="eyebrow">— Pricing</span>
-            <h2>Custom pricing for every creator</h2>
-            <p>Reach out and let's tailor a package that fits your content goals.</p>
-          </div>
-
-          <div class="pricing__panel reveal" data-delay="1">
-            <div class="pricing__copy">
-              <div class="pricing__pills">
-                <span class="pill pill--ghost">Short-form</span>
-                <span class="pill pill--ghost">Long-form</span>
-                <span class="pill pill--ghost">Motion graphics</span>
-                <span class="pill pill--ghost">Thumbnails</span>
-              </div>
-              <h3>Tell me the goal.<br />I'll build the edit.</h3>
-              <p>
-                Pay per project or lock in a monthly slot. Every quote is based on length,
-                complexity and turnaround — no generic packages, no wasted spend.
-              </p>
-              <a class="btn btn--solid" href="#contact">Get in touch <svg class="icon"><use href="#i-arrow"></use></svg></a>
-              <p class="pricing__note"><span class="dot-live"></span> Replies within 24 hours · No retainers required</p>
-            </div>
-
-            <div class="pricing__list">
-              <h4>Every project includes</h4>
-              <ul class="checklist">
-                <li><svg class="icon"><use href="#i-check"></use></svg> Hook-first script polish &amp; story structure</li>
-                <li><svg class="icon"><use href="#i-check"></use></svg> Custom captions, sound design &amp; SFX</li>
-                <li><svg class="icon"><use href="#i-check"></use></svg> Motion graphics, transitions &amp; titles</li>
-                <li><svg class="icon"><use href="#i-check"></use></svg> Platform-ready exports — 9:16, 1:1, 16:9</li>
-                <li><svg class="icon"><use href="#i-check"></use></svg> Two rounds of revisions</li>
-                <li><svg class="icon"><use href="#i-check"></use></svg> Project files &amp; source on request</li>
-              </ul>
-              <div class="pricing__quote">
-                <span>Most projects start at</span>
-                <strong>$120<span>/video</span></strong>
-                <span class="pricing__quote-note">Final quote depends on scope.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- ============================ FAQ ============================ -->
       <section class="section faq" id="faq">
         <div class="container">
@@ -844,14 +613,13 @@
 
               <details class="faq-item">
                 <summary>
-                  <span>How does pricing work?</span>
+                  <span>How do revisions work?</span>
                   <span class="faq-item__icon"><svg class="icon"><use href="#i-plus"></use></svg></span>
                 </summary>
                 <div class="faq-item__body">
                   <p>
-                    Projects are quoted by length, complexity and turnaround. Monthly creator packages
-                    are available for a set number of videos per month — usually the best value if
-                    you post consistently.
+                    Every project includes two rounds of revisions. We review the cut together, then
+                    I tighten pacing, captions and sound until it is ready to publish.
                   </p>
                 </div>
               </details>
@@ -924,8 +692,7 @@
           </div>
 
           <div class="contact__grid">
-            <a class="contact-card reveal" data-delay="1" data-pixel-card data-pixel-gap="7" data-pixel-speed="26" data-pixel-opacity="0.55" data-pixel-fade="0.55" data-pixel-glow="0.32" data-pixel-spotlight="0.5" data-pixel-reveal="650" data-pixel-intro-delay="0" href="https://discordapp.com/users/1046281961305542677" target="_blank" rel="noopener noreferrer">
-              <canvas class="pixel-card__canvas" aria-hidden="true"></canvas>
+            <a class="contact-card reveal" data-delay="1" href="https://discordapp.com/users/1046281961305542677" target="_blank" rel="noopener noreferrer">
               <div class="contact-card__top">
                 <span class="contact-card__icon"><svg class="icon"><use href="#i-discord"></use></svg></span>
                 <svg class="icon contact-card__arrow"><use href="#i-arrow"></use></svg>
@@ -935,8 +702,7 @@
               <span class="contact-card__handle">@minhajmotion</span>
             </a>
 
-            <a class="contact-card reveal" data-delay="2" data-pixel-card data-pixel-gap="7" data-pixel-speed="30" data-pixel-opacity="0.55" data-pixel-fade="0.55" data-pixel-glow="0.32" data-pixel-spotlight="0.5" data-pixel-reveal="700" data-pixel-intro-delay="130" href="https://www.instagram.com/clipzy.media__/?hl=en" target="_blank" rel="noopener noreferrer">
-              <canvas class="pixel-card__canvas" aria-hidden="true"></canvas>
+            <a class="contact-card reveal" data-delay="2" href="https://www.instagram.com/clipzy.media__/?hl=en" target="_blank" rel="noopener noreferrer">
               <div class="contact-card__top">
                 <span class="contact-card__icon"><svg class="icon"><use href="#i-instagram"></use></svg></span>
                 <svg class="icon contact-card__arrow"><use href="#i-arrow"></use></svg>
@@ -946,8 +712,7 @@
               <span class="contact-card__handle">@minhaj.motions</span>
             </a>
 
-            <div class="contact-card reveal" data-delay="3" data-pixel-card data-pixel-gap="7" data-pixel-speed="23" data-pixel-opacity="0.55" data-pixel-fade="0.55" data-pixel-glow="0.32" data-pixel-spotlight="0.5" data-pixel-reveal="620" data-pixel-intro-delay="260">
-              <canvas class="pixel-card__canvas" aria-hidden="true"></canvas>
+            <div class="contact-card reveal" data-delay="3">
               <div class="contact-card__top">
                 <span class="contact-card__icon"><svg class="icon"><use href="#i-mail"></use></svg></span>
                 <a class="icon-btn" href="mailto:clipzymediaco@gmail.com" aria-label="Email Minhaj">
@@ -983,7 +748,9 @@
           </a>
           <nav class="site-footer__nav" aria-label="Footer">
             <a href="#top">Home</a>
-            <a href="#work">Work</a>
+            <a href="#work">Showreel</a>
+            <a href="short-form.html">Short-form</a>
+            <a href="long-form.html">Long-form</a>
             <a href="#about">About</a>
             <a href="#testimonials">Reviews</a>
             <a href="#faq">FAQ</a>
@@ -1036,7 +803,6 @@
 
     <div class="grain" aria-hidden="true"></div>
 
-    <script src="light-rays.js"></script>
     <script src="pixel-card.js"></script>
     <script src="script.js"></script>
   </body>

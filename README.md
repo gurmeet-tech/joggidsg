@@ -1,9 +1,9 @@
-# Minhaj Motion - video editing portfolio
+# Minhaj Motion — video editing portfolio
 
-A dark-first, one-page video editing portfolio inspired by
-[minhajmotion.lovable.app](https://minhajmotion.lovable.app/), rebuilt as a
-dependency-free static site. The hero adds three infinitely scrolling video
-rails, alternating direction each row, plus a WebGL light-ray atmosphere.
+A dark-first, build-free portfolio for a short-form and long-form video editor.
+The landing page leads with a full-bleed `MAKE THEM WATCH.` statement and a
+CSS-built MacBook Pro playing the showreel. Short-form and long-form work each
+live on their own gallery page.
 
 ## Run locally
 
@@ -33,17 +33,26 @@ npx vercel --prod
 fonts, posters and videos. The first visit per browser session plays the
 three-slice intro; `?intro=0` skips it and `?intro=1` forces it.
 
+## Pages
+
+| Path | Purpose |
+| --- | --- |
+| `index.html` | Landing page: hero, showreel, about, reviews, FAQ and contact |
+| `short-form.html` | Short-form gallery with its own lightbox |
+| `long-form.html` | Long-form gallery with its own lightbox |
+
 ## Files
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | Page markup, SVG icon sprite, lightbox, loading screen, content |
-| `styles.css` | Design tokens, dark/light themes, layout, responsive rules |
-| `script.js` | Theme, intro, rails, previews, lightbox, filters, footer hover, media guards |
-| `light-rays.js` | Vanilla WebGL2 port of the React Bits LightRays component |
-| `pixel-card.js` | Vanilla canvas port of the React Bits PixelCard component |
-| `vercel.json` | Vercel static deployment, cache and security headers |
-| `assets/fonts/` | Sequel Sans Display + Body (WOFF) |
+| `index.html` | Landing page markup, SVG sprite, lightbox, intro loader |
+| `short-form.html` / `long-form.html` | Work pages and their galleries |
+| `styles.css` | Tokens, themes, hero/MacBook, work pages, responsive rules |
+| `script.js` | Theme, intro, lightbox, footer hover, counters, media guards |
+| `pixel-card.js` | Vanilla canvas port of the React Bits PixelCard effect |
+| `light-rays.js` | Optional WebGL LightRays module (not loaded by the current hero) |
+| `vercel.json` | Static deployment, cache and security headers |
+| `assets/fonts/` | Creato Display (WOFF) + Sequel Sans body (WOFF) |
 | `assets/videos/` | 14 local MP4 clips |
 | `assets/posters/` | Matching poster frames |
 | `assets/img/logo.png` | Header/footer mark and favicon |
@@ -52,25 +61,20 @@ three-slice intro; `?intro=0` skips it and `?intro=1` forces it.
 
 - **Dark mode first** with a light-mode toggle; choice persists in
   `localStorage` under `mm-theme`.
-- **Animated intro** - three full-width typographic slices slide in from above
+- **MacBook hero** — oversized Creato Display type beside a CSS-built MacBook
+  Pro. The screen autoplays the muted showreel, pauses when reduced motion is
+  requested, and respects tab visibility.
+- **Creato Display CTAs** — buttons use Creato Display Bold with a subtle
+  canvas PixelCard reveal on hover/focus.
+- **Animated intro** — three full-width typographic slices slide in from above
   one second apart, merge, then lift away as the site settles in. Runs once per
   session and respects `prefers-reduced-motion`.
-- **Hero light rays** - theme-aware WebGL shader background at low opacity,
-  with cursor influence, click pulses and automatic pause off-screen.
-- **Hero video wall** - 3 rows, seamless loops, alternating directions, pause
-  on hover, and muted hover previews. Tracks self-fill so the loop stays
-  seamless on ultrawide screens.
-- **PixelCard contact cards** - the React Bits pixel reveal/spotlight effect
-  runs on the footer contact cards using a lightweight canvas port.
-- **Footer wordmark hover** - the oversized outlined text follows the cursor
+- **Dedicated work pages** — seven short-form edits and three long-form cuts,
+  each in its own lightbox gallery.
+- **Showreel lightbox** — the hero CTA opens the same showreel with sound.
+- **Footer wordmark hover** — the oversized outlined text follows the cursor
   with magnetic letters and a soft light-spot fill.
-- **Showreel + filterable work grid** - 10 projects across short-form,
-  long-form and motion graphics, with animated filtering.
-- **Per-group lightboxes** - rail, work and showreel each get their own gallery,
-  keyboard navigation, focus trap and portrait-aware sizing.
-- **Animated stats, testimonial marquee, pricing panel, FAQ accordion,
-  contact cards and copy-email toast.**
-- **Responsive** from 320 px upward, with a mobile menu, 2-column work grid and
+- **Responsive** from 320 px upward, with a mobile menu, fluid type and
   reduced-motion support.
 
 ## Media protection
@@ -87,22 +91,18 @@ HLS with a licence server, or visible per-viewer watermarking.
 
 ## Editing content
 
-- Work items live directly in `index.html` inside `#workGrid`; each card uses
-  `data-cat` (`short`, `long`, `motion`) for filtering.
-- Hero rail items are defined in the `railData` array at the top of
-  `script.js`.
-- Theme colours and spacing live in the `:root` and `html[data-theme]` blocks in
-  `styles.css`.
-- To swap a video, replace the file in `assets/videos/`, its poster in
-  `assets/posters/`, and update the matching `data-src` / `data-poster` values.
-- LightRays options are on the `.hero__rays` element in `index.html`
-  (`data-rays-*`). PixelCard options are on each contact card
-  (`data-pixel-*`).
+- The landing hero lives in `index.html` under `.hero`. Swap the hero video by
+  changing the `.macbook__video` source and poster.
+- Work items live in `short-form.html` and `long-form.html`. Each gallery card
+  uses `data-src`, `data-poster`, `data-title`, `data-category`,
+  `data-duration` and `data-orientation` (`portrait` or `landscape`).
+- PixelCard is applied automatically to every `.btn`; options are set in
+  `prepareButton()` inside `pixel-card.js`.
+- Theme colours, hero sizing and the MacBook frame live in `styles.css`.
+- LightRays is available in `light-rays.js` but is not loaded on the current
+  pages.
 
 ## Notes
 
-- Videos are muted for hover previews and play with sound in the lightbox.
-- The page is intentionally JS-enhanced: the hero rail, testimonial clones and
-  intro are rendered/interacted with at runtime.
-- No analytics, trackers or external runtime requests. React Bits components
-  are ported to vanilla JS to keep the site build-free and local-first.
+- Videos are muted in the hero showcase and play with sound in the lightbox.
+- No analytics, trackers or external runtime requests.

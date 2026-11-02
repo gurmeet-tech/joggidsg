@@ -1,6 +1,6 @@
 /* ==========================================================================
    PixelCard - vanilla canvas port of the React Bits component.
-   Used as a subtle interactive layer on the contact cards.
+   Used as a subtle interactive layer on buttons.
    ========================================================================== */
 (function () {
   "use strict";
@@ -55,10 +55,12 @@
     const root = getComputedStyle(document.documentElement);
     const light = document.documentElement.getAttribute("data-theme") === "light";
     const fg = root.getPropertyValue("--fg").trim() || (light ? "#0c0c0d" : "#f7f7f5");
+    const bg = root.getPropertyValue("--bg").trim() || (light ? "#f5f4f0" : "#0a0a0b");
     const muted = root.getPropertyValue("--muted").trim() || (light ? "#5f5e59" : "#a3a3a0");
     const border = root.getPropertyValue("--border-strong").trim() || (light ? "#cbc7bc" : "#3a3a3d");
     const palette = toList(container.dataset.pixelColors);
-    const colors = palette.length ? palette : light ? [fg, muted, border] : [fg, muted, border];
+    const solid = container.classList.contains("btn--solid");
+    const colors = palette.length ? palette : solid ? [bg, muted, border] : [fg, muted, border];
 
     return {
       colors,
@@ -68,7 +70,7 @@
       revealDuration: Math.max(50, number(container, "pixelReveal", 600)),
       spotlight: clamp(number(container, "pixelSpotlight", 0.5), 0, 1),
       glow: clamp(number(container, "pixelGlow", 0.5), 0, 1),
-      glowColor: toRgb(container.dataset.pixelGlowColor || fg),
+      glowColor: toRgb(container.dataset.pixelGlowColor || (solid ? bg : fg)),
       opacity: clamp(number(container, "pixelOpacity", 1), 0, 1),
       fade: clamp(number(container, "pixelFade", 0), 0, 1),
       trigger: container.dataset.pixelTrigger === "always" ? "always" : "hover",
@@ -464,5 +466,35 @@
     wake();
   }
 
+  function prepareButton(button) {
+    if (button.hasAttribute("data-pixel-card")) return;
+
+    button.setAttribute("data-pixel-card", "");
+    button.dataset.pixelGap = "6";
+    button.dataset.pixelSize = "1.6";
+    button.dataset.pixelSpeed = "18";
+    button.dataset.pixelOpacity = "0.42";
+    button.dataset.pixelFade = "0.45";
+    button.dataset.pixelGlow = "0.16";
+    button.dataset.pixelSpotlight = "0.28";
+    button.dataset.pixelReveal = "380";
+    button.dataset.pixelIntro = "false";
+    button.dataset.pixelClickPulse = "true";
+
+    const canvas = document.createElement("canvas");
+    canvas.className = "pixel-card__canvas";
+    canvas.setAttribute("aria-hidden", "true");
+    button.prepend(canvas);
+
+    Array.from(button.childNodes).forEach((node) => {
+      if (node.nodeType !== Node.TEXT_NODE || !node.textContent.trim()) return;
+      const label = document.createElement("span");
+      label.className = "btn__label";
+      label.textContent = node.textContent.trim();
+      node.replaceWith(label);
+    });
+  }
+
+  document.querySelectorAll(".btn").forEach(prepareButton);
   document.querySelectorAll("[data-pixel-card]").forEach(mount);
 })();
