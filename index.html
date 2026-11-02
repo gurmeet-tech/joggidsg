@@ -21,7 +21,6 @@
     <link rel="icon" type="image/png" href="assets/img/logo.png" />
     <link rel="preload" href="assets/fonts/CreatoDisplay-Black.woff" as="font" type="font/woff" crossorigin />
     <link rel="preload" href="assets/fonts/CreatoDisplay-Bold.woff" as="font" type="font/woff" crossorigin />
-    <link rel="preload" href="assets/fonts/SequelSansRomanBody2.woff" as="font" type="font/woff" crossorigin />
     <link rel="stylesheet" href="styles.css" />
     <script>
       (function () {
@@ -208,6 +207,33 @@
       <!-- ============================ Hero ============================ -->
       <section class="hero" id="top">
         <div class="hero__bg" aria-hidden="true"></div>
+        <div
+          class="hero__rays"
+          data-light-rays
+          data-rays-origin="top-center"
+          data-rays-color="#ffffff"
+          data-rays-light-color="#7c6f59"
+          data-rays-speed="0.72"
+          data-rays-spread="0.58"
+          data-rays-length="1.55"
+          data-rays-density="1.05"
+          data-rays-sharpness="0.3"
+          data-rays-glow="0.52"
+          data-rays-haze="0.34"
+          data-rays-atmosphere="0.55"
+          data-rays-intensity="0.88"
+          data-rays-fade="1.1"
+          data-rays-saturation="0.7"
+          data-rays-influence="0.12"
+          data-rays-noise="0.02"
+          data-rays-distortion="0.08"
+          data-rays-opacity="0.2"
+          data-rays-light-opacity="0.2"
+          data-rays-max-ratio="1.6"
+          aria-hidden="true"
+        >
+          <canvas></canvas>
+        </div>
         <div class="container hero__inner">
           <div class="hero__stage">
             <div class="hero__copy">
@@ -312,6 +338,172 @@
             </div>
           </div>
 
+          <div class="work-block">
+            <div class="work-head reveal">
+              <div>
+                <span class="eyebrow">— Selected work</span>
+                <h3 class="work-head__title">Edits that hold attention</h3>
+              </div>
+              <div class="filters" role="group" aria-label="Filter work">
+                <button class="filter is-active" type="button" data-filter="all" aria-pressed="true">All <span>10</span></button>
+                <button class="filter" type="button" data-filter="short" aria-pressed="false">Short-form <span>4</span></button>
+                <button class="filter" type="button" data-filter="long" aria-pressed="false">Long-form <span>2</span></button>
+                <button class="filter" type="button" data-filter="motion" aria-pressed="false">Motion <span>4</span></button>
+              </div>
+            </div>
+
+            <div class="work-grid" id="workGrid">
+              <article class="work-card" data-cat="short" data-delay="1">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-01.mp4" data-poster="assets/posters/short-01.jpg" data-title="Skincare hook — creator series" data-category="Short-form" data-duration="0:51"><span class="visually-hidden">Skincare hook</span>
+                  <img src="assets/posters/short-01.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-01.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Short-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:51</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Skincare hook</h4>
+                  <span>1.2M views</span>
+                </div>
+              </article>
+
+              <article class="work-card work-card--wide" data-cat="motion" data-delay="2">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-02.mp4" data-poster="assets/posters/motion-02.jpg" data-title="SaaS launch — product film" data-category="Motion graphics" data-duration="0:41"><span class="visually-hidden">SaaS launch</span>
+                  <img src="assets/posters/motion-02.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-02.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Motion graphics</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:41</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>SaaS launch</h4>
+                  <span>820K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="long" data-delay="3">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-03.mp4" data-poster="assets/posters/short-03.jpg" data-title="Podcast clip pack — long-form to shorts" data-category="Long-form" data-duration="1:44"><span class="visually-hidden">Podcast clip pack</span>
+                  <img src="assets/posters/short-03.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-03.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Long-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">1:44</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Podcast clip pack</h4>
+                  <span>2.4M views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="motion" data-delay="1">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-04.mp4" data-poster="assets/posters/motion-04.jpg" data-title="Brand sting — identity in motion" data-category="Motion graphics" data-duration="0:17"><span class="visually-hidden">Brand sting</span>
+                  <img src="assets/posters/motion-04.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-04.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Motion graphics</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:17</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Brand sting</h4>
+                  <span>640K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="short" data-delay="2">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-05.mp4" data-poster="assets/posters/short-05.jpg" data-title="Fitness series — retention edit" data-category="Short-form" data-duration="1:00"><span class="visually-hidden">Fitness series</span>
+                  <img src="assets/posters/short-05.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-05.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Short-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">1:00</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Fitness series</h4>
+                  <span>1.8M views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="motion" data-delay="3">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-03.mp4" data-poster="assets/posters/motion-03.jpg" data-title="Logo animation — brand reveal" data-category="Motion graphics" data-duration="0:08"><span class="visually-hidden">Logo animation</span>
+                  <img src="assets/posters/motion-03.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-03.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Motion graphics</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:08</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Logo animation</h4>
+                  <span>300K views</span>
+                </div>
+              </article>
+
+              <article class="work-card work-card--wide" data-cat="long" data-delay="1">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/longform-01.mp4" data-poster="assets/posters/longform-01.jpg" data-title="Documentary cut — long-form storytelling" data-category="Long-form" data-duration="0:12"><span class="visually-hidden">Documentary cut</span>
+                  <img src="assets/posters/longform-01.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/longform-01.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Long-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:12</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Documentary cut</h4>
+                  <span>480K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="short" data-delay="2">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-08.mp4" data-poster="assets/posters/short-08.jpg" data-title="Gaming highlight — punch-in edit" data-category="Short-form" data-duration="1:00"><span class="visually-hidden">Gaming highlight</span>
+                  <img src="assets/posters/short-08.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-08.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Short-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">1:00</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Gaming highlight</h4>
+                  <span>900K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="motion" data-delay="3">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/motion-01.mp4" data-poster="assets/posters/motion-01.jpg" data-title="Product teaser — type in motion" data-category="Motion graphics" data-duration="0:11"><span class="visually-hidden">Product teaser</span>
+                  <img src="assets/posters/motion-01.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/motion-01.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Motion graphics</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:11</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Product teaser</h4>
+                  <span>520K views</span>
+                </div>
+              </article>
+
+              <article class="work-card" data-cat="short" data-delay="1">
+                <button class="work-card__media" type="button" data-lightbox data-src="assets/videos/short-06.mp4" data-poster="assets/posters/short-06.jpg" data-title="Recipe short — step-by-step edit" data-category="Short-form" data-duration="0:40"><span class="visually-hidden">Recipe short</span>
+                  <img src="assets/posters/short-06.jpg" alt="" loading="lazy" />
+                  <video muted loop playsinline preload="none" data-preview="assets/videos/short-06.mp4" aria-hidden="true"></video>
+                  <span class="work-card__shade" aria-hidden="true"></span>
+                  <span class="work-card__badge">Short-form</span>
+                  <span class="work-card__play" aria-hidden="true"><svg class="icon"><use href="#i-play"></use></svg></span>
+                  <span class="work-card__dur">0:40</span>
+                </button>
+                <div class="work-card__meta">
+                  <h4>Recipe short</h4>
+                  <span>1.1M views</span>
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -803,6 +995,7 @@
 
     <div class="grain" aria-hidden="true"></div>
 
+    <script src="light-rays.js"></script>
     <script src="pixel-card.js"></script>
     <script src="script.js"></script>
   </body>

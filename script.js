@@ -158,6 +158,83 @@
     showreelMedia.dataset.gallery = "showreel";
   }
 
+  /* ------------------------------------------------------- Work grid previews */
+  function bindPreview(container) {
+    if (!canHover || container.dataset.previewBound) return;
+    const video = $("video[data-preview]", container);
+    if (!video) return;
+    container.dataset.previewBound = "1";
+    let playToken = 0;
+
+    const start = () => {
+      const token = ++playToken;
+      if (!video.getAttribute("src")) {
+        video.src = video.dataset.preview;
+        video.load();
+      }
+      const attempt = video.play();
+      if (attempt && typeof attempt.then === "function") attempt.catch(() => {});
+      if (token === playToken) container.classList.add("is-playing");
+    };
+
+    const stop = () => {
+      playToken++;
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch (e) {}
+      container.classList.remove("is-playing");
+    };
+
+    container.addEventListener("mouseenter", start);
+    container.addEventListener("mouseleave", stop);
+    container.addEventListener("focusout", stop);
+  }
+
+  $$("#workGrid .work-card__media").forEach((media) => {
+    const wide = media.closest(".work-card--wide");
+    media.dataset.orientation = wide ? "landscape" : "portrait";
+    media.dataset.gallery = "work";
+  });
+  $$("#workGrid .work-card").forEach(bindPreview);
+
+  /* ---------------------------------------------------------------- Work filters */
+  const filterButtons = $$(".filters .filter");
+  const workCards = $$("#workGrid .work-card");
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter || "all";
+      filterButtons.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle("is-active", active);
+        item.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+
+      workCards.forEach((card) => {
+        const show = filter === "all" || card.dataset.cat === filter;
+        if (card._hideTimer) {
+          window.clearTimeout(card._hideTimer);
+          card._hideTimer = null;
+        }
+        if (show) {
+          card.classList.remove("is-hidden");
+          card.classList.add("is-filtering");
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => card.classList.remove("is-filtering"));
+          });
+        } else {
+          card.classList.add("is-filtering");
+          card._hideTimer = window.setTimeout(() => {
+            card.classList.add("is-hidden");
+            card.classList.remove("is-filtering");
+            card._hideTimer = null;
+          }, 200);
+        }
+      });
+    });
+  });
+
   /* ------------------------------------------------------------------ Header */
   const header = $("#siteHeader");
   const progress = $(".scroll-progress span");
@@ -489,10 +566,7 @@
       let pointerY = 0;
 
       const clear = () => {
-        chars.forEach((char) => {
-          char.style.transform = "";
-          char.classList.remove("is-lit");
-        });
+        chars.forEach((char) => char.classList.remove("is-lit"));
       };
 
       const update = () => {
@@ -500,7 +574,7 @@
         const rect = footerMark.getBoundingClientRect();
         footerMark.style.setProperty("--mx", pointerX - rect.left + "px");
         footerMark.style.setProperty("--my", pointerY - rect.top + "px");
-        const radius = Math.max(150, Math.min(330, rect.width * 0.16));
+        const radius = Math.max(130, Math.min(280, rect.width * 0.145));
 
         chars.forEach((char) => {
           if (char.classList.contains("is-space")) return;
@@ -508,22 +582,7 @@
           const dx = box.left + box.width / 2 - pointerX;
           const dy = box.top + box.height / 2 - pointerY;
           const distance = Math.hypot(dx, dy);
-          if (distance < radius) {
-            const force = 1 - distance / radius;
-            char.style.transform =
-              "translate(" +
-              (dx * force * 0.07).toFixed(2) +
-              "px, " +
-              (dy * force * 0.1).toFixed(2) +
-              "px) scale(" +
-              (1 + force * 0.05).toFixed(3) +
-              ")";
-            if (force > 0.12) char.classList.add("is-lit");
-            else char.classList.remove("is-lit");
-          } else {
-            char.style.transform = "";
-            char.classList.remove("is-lit");
-          }
+          char.classList.toggle("is-lit", distance < radius && distance < radius * 0.78);
         });
       };
 

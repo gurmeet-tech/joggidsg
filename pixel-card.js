@@ -262,7 +262,8 @@
       const spotStrength = settings.spotlight * state.spotPower;
       const pulses = state.pulses;
       const twinkle = reduce ? 0 : smoothstep(0, 100, settings.speed) > 0 ? 1 : 0;
-      const frequency = (settings.speed / 35) * 1.35;
+      const frequency = Math.max(0.9, (settings.speed / 35) * 1.35);
+      const live = state.active && !reduce ? 1 : 0;
 
       for (let color = 0; color < settings.colors.length; color++) {
         ctx.fillStyle = settings.colors[color];
@@ -278,6 +279,15 @@
             const wave = Math.sin(state.phase[i] + state.time * frequency * state.rate[i]);
             size *= 0.62 + 0.38 * wave;
             alpha += 0.12 * wave + (state.jitter[i] > 0.92 ? 0.35 * Math.max(0, wave) : 0);
+          }
+          if (live) {
+            // Keep the mosaic alive for as long as the pointer stays on the
+            // control. A slow diagonal sweep plus a per-pixel shimmer makes the
+            // grid read as a continuous effect, not a one-shot reveal.
+            const sweep = Math.sin(state.time * 2.15 - (x + y) * 0.045);
+            const shimmer = 0.5 + 0.5 * Math.sin(state.time * 1.65 + state.phase[i]);
+            size *= 1 + 0.2 * sweep + 0.08 * shimmer;
+            alpha += 0.1 * Math.max(0, sweep) + 0.035 * shimmer;
           }
           size *= easeOutBack(presence);
           const flash = presence < 1 && state.active ? Math.sin(presence * Math.PI) : 0;
