@@ -582,7 +582,7 @@
           const dx = box.left + box.width / 2 - pointerX;
           const dy = box.top + box.height / 2 - pointerY;
           const distance = Math.hypot(dx, dy);
-          char.classList.toggle("is-lit", distance < radius && distance < radius * 0.78);
+          char.classList.toggle("is-lit", distance < radius * 0.78);
         });
       };
 
