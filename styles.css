@@ -160,7 +160,7 @@
   --font-editorial: "Instrument Serif", "Iowan Old Style", "Baskerville", "Times New Roman", serif;
   /* Secondary / UI type: Inter with tight tracking across the interface. */
   --font-body: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --island-ease: cubic-bezier(0.46, 0, 0.04, 1.02);
+  --island-ease: cubic-bezier(0.34, 1.28, 0.64, 1);
   --island-duration: 3s;
 
   --radius: 16px;
@@ -6994,7 +6994,7 @@ body {
   gap: 9px;
   overflow: hidden;
   transition: max-width var(--island-duration) var(--island-ease),
-    opacity 0.45s var(--ease);
+    opacity var(--island-duration) var(--island-ease);
 }
 
 .site-header .brand__name {
@@ -7004,7 +7004,7 @@ body {
   white-space: nowrap;
   opacity: 1;
   transition: max-width var(--island-duration) var(--island-ease),
-    opacity 0.45s var(--ease);
+    opacity var(--island-duration) var(--island-ease);
 }
 
 .site-header.is-condensed .brand__name {
@@ -7020,7 +7020,8 @@ body {
   visibility: visible;
   transform: none;
   transition: max-width var(--island-duration) var(--island-ease),
-    opacity 0.4s var(--ease), visibility 0.2s;
+    opacity var(--island-duration) var(--island-ease),
+    visibility var(--island-duration) var(--island-ease);
 }
 
 .site-header.is-condensed .site-nav {
@@ -7125,8 +7126,9 @@ body {
   z-index: 5;
   max-width: 180px;
   gap: 8px;
-  transition: opacity 0.35s var(--ease),
-    transform var(--island-duration) var(--island-ease), visibility 0.2s;
+  transition: opacity var(--island-duration) var(--island-ease),
+    transform var(--island-duration) var(--island-ease),
+    visibility var(--island-duration) var(--island-ease);
 }
 
 .site-header.is-condensed .nav-island {
@@ -7155,7 +7157,7 @@ body {
   -webkit-mask: none;
   mask: none;
   transition: width var(--island-duration) var(--island-ease),
-    opacity 0.4s var(--ease);
+    opacity var(--island-duration) var(--island-ease);
 }
 
 .site-header.is-condensed .nav-progress-arc {
@@ -7483,7 +7485,7 @@ body {
   place-items: center;
   width: 64px;
   height: 64px;
-  border: 7px solid #000;
+  border: 3px solid #000;
   border-radius: 50%;
   background: #25d366;
   box-shadow: 6px 6px 0 #000;
@@ -7805,7 +7807,7 @@ body {
     bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     width: 58px;
     height: 58px;
-    border-width: 7px;
+    border-width: 3px;
     box-shadow: 5px 5px 0 #000;
   }
 
@@ -7966,5 +7968,95 @@ body {
     margin-right: auto;
     transform: none;
     text-align: center;
+  }
+}
+
+/* Booking date dots: 7 x 7 px, no hover feedback, 24 px invisible tap target. */
+.booking-calendar__day {
+  --day-fill: color-mix(in srgb, var(--muted-2) 38%, transparent);
+  --day-border: transparent;
+  position: relative;
+  width: 7px;
+  height: 7px;
+  min-height: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-color: var(--day-border);
+  border-radius: 50%;
+  justify-self: center;
+  align-self: center;
+  color: transparent;
+  background: var(--day-fill);
+  font-size: 0;
+  line-height: 0;
+  transform: none;
+  cursor: default;
+  transition: none;
+}
+
+.booking-calendar__day::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.booking-calendar__day.has-slots {
+  --day-fill: color-mix(in srgb, var(--fg) 84%, transparent);
+}
+
+.booking-calendar__day.has-slots::after {
+  display: none;
+}
+
+.booking-calendar__day.is-today {
+  --day-border: color-mix(in srgb, var(--accent-blue) 70%, transparent);
+  border-color: var(--day-border);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-blue) 70%, transparent);
+}
+
+.booking-calendar__day.is-selected {
+  --day-fill: var(--fg);
+  --day-border: transparent;
+  border-color: var(--day-border);
+  color: transparent;
+  transform: none;
+  box-shadow: 0 0 0 2px var(--bg-soft), 0 0 0 4px var(--fg);
+}
+
+.booking-calendar__day:disabled {
+  opacity: 0.16;
+  cursor: not-allowed;
+}
+
+.booking-calendar__day:not(:disabled):hover {
+  border-color: var(--day-border);
+  background: var(--day-fill);
+}
+
+.booking-calendar__day:focus-visible {
+  outline: 1px solid var(--fg);
+  outline-offset: 3px;
+}
+
+/* Keep the calendar rows readable while the date itself is a 7 px dot. */
+.booking-calendar__grid {
+  grid-auto-rows: 42px;
+}
+
+@media (max-width: 720px) {
+  .booking-calendar__grid {
+    grid-auto-rows: 29px;
+  }
+}
+
+@media (max-width: 380px) {
+  .booking-calendar__grid {
+    grid-auto-rows: 26px;
   }
 }

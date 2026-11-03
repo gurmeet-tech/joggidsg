@@ -73,7 +73,8 @@ three-slice intro; `?intro=0` skips it and `?intro=1` forces it.
   reduce the tilt and distance, and `prefers-reduced-motion` shows the flat state
   immediately.
 - **3-second Dynamic Island navigation** - a floating dotted pill condenses on
-  scroll with a `3s cubic-bezier(.46,0,.04,1.02)` transition. The rounded SVG
+  scroll with a synchronized `3s` spring transition. The nav links, brand, island
+  label and rounded SVG progress arc morph together with a subtle overshoot. The
   progress arc is the only scroll indicator. The island stays compact while
   scrolling upward and only expands at the very top. The mobile sheet never pops
   the island open when it closes mid-page.
@@ -85,8 +86,9 @@ three-slice intro; `?intro=0` skips it and `?intro=1` forces it.
   opens in dark mode. An explicit choice is saved in `localStorage` under
   `mm-theme` and wins on later visits.
 - **Minimal booking flow** - `#book` is a compact calendar with weekday-only
-  dates, available times and a prefilled email request. It uses native buttons
-  and default cursors, with smaller dates on mobile and no backend dependency.
+  7 px date dots, available times and a prefilled email request. The date dots
+  have no hover animation, keep a 24 px tap target and use native buttons and
+  default cursors, with no backend dependency.
 - **Editorial reviews** - rounded cards with a faint brand watermark, a stronger
   card silhouette, quote detail and clear Book a call / See the work CTAs.
 - **MagicBento values grid** - a vanilla spotlight/border port with keyboard
@@ -98,7 +100,7 @@ three-slice intro; `?intro=0` skips it and `?intro=1` forces it.
 - **Selected work grid** - an editorial masthead, a Showreel feature and ten
   homepage cards with All / Short-form / Long-form / Motion filters, consistent
   framing, lazy hover previews and click-to-lightbox playback.
-- **Floating WhatsApp CTA** - a bottom-right green disc with a 7 px black border,
+- **Floating WhatsApp CTA** - a bottom-right green disc with a 3 px black border,
   solid black offset shadow and three custom outlined stars that scale in, rotate
   and break away on a loop. The prefilled chat link is ready for a real number.
 - **Animated intro** - three full-width typographic slices slide in from above
