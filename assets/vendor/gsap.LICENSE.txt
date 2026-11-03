@@ -1,0 +1,6 @@
+﻿GSAP 3.15.0 (gsap.min.js, ScrollTrigger.min.js)
+Copyright 2008-2026 GreenSock, Inc.
+Source: https://cdn.jsdelivr.net/npm/gsap@3.15.0/
+License: https://gsap.com/standard-license
+Vendored locally for the scroll-driven editorial hero. Review the license
+terms before redistributing GSAP in another product.

@@ -21,6 +21,8 @@
     <link rel="icon" type="image/png" href="assets/img/logo.png" />
     <link rel="preload" href="assets/fonts/CreatoDisplay-Black.woff" as="font" type="font/woff" crossorigin />
     <link rel="preload" href="assets/fonts/CreatoDisplay-Bold.woff" as="font" type="font/woff" crossorigin />
+    <link rel="preload" href="assets/fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="styles.css" />
     <script>
       (function () {
@@ -185,7 +187,7 @@
         </div>
       </div>
 
-      <div class="mobile-menu" id="mobileMenu" hidden>
+      <div class="mobile-menu" id="mobileMenu" hidden data-lenis-prevent>
         <nav class="container" aria-label="Mobile">
           <a href="#top">Home <span>01</span></a>
           <a href="#work">Showreel <span>02</span></a>
@@ -205,7 +207,7 @@
 
     <main>
       <!-- ============================ Hero ============================ -->
-      <section class="hero" id="top">
+      <section class="hero hero--editorial" id="top" aria-labelledby="heroTitle">
         <div class="hero__bg" aria-hidden="true"></div>
         <div
           class="hero__rays"
@@ -227,88 +229,82 @@
           data-rays-influence="0.12"
           data-rays-noise="0.02"
           data-rays-distortion="0.08"
-          data-rays-opacity="0.2"
-          data-rays-light-opacity="0.2"
+          data-rays-opacity="1"
+          data-rays-light-opacity="1"
           data-rays-max-ratio="1.6"
           aria-hidden="true"
         >
           <canvas></canvas>
         </div>
-        <div class="container hero__inner">
-          <div class="hero__stage">
-            <div class="hero__copy">
-              <span class="pill pill--dot"><i></i> Video editor &amp; motion designer</span>
+        <canvas class="hero-editorial__particles" aria-hidden="true"></canvas>
 
-              <h1 class="hero__title hero__title--big">
-                <span class="hero__word">MAKE</span>
-                <span class="hero__word">THEM</span>
-                <span class="hero__word">WATCH<span class="hero__dot">.</span></span>
-              </h1>
+        <div class="container hero-editorial__inner">
+          <h1 class="hero-editorial__title" id="heroTitle">
+            <span>The whole city,</span>
+            <span><em>one stop</em> at a time</span>
+          </h1>
 
-              <p class="hero__sub">
-                Short-form, long-form and motion edits built to hold attention.
-              </p>
+          <p class="hero-editorial__sub">
+            Short-form, long-form and motion edits built to hold attention.
+          </p>
 
-              <div class="hero__actions">
-                <button
-                  class="btn btn--solid btn--hero"
-                  type="button"
-                  data-lightbox
-                  data-gallery="hero-reel"
-                  data-src="assets/videos/showreel.mp4"
-                  data-poster="assets/posters/showreel.jpg"
-                  data-title="2026 Showreel"
-                  data-category="Showreel"
-                  data-duration="0:20"
-                  data-orientation="landscape"
-                >
-                  <svg class="icon"><use href="#i-play"></use></svg>
-                  <span class="btn__label">Watch Showreel</span>
-                </button>
-                <a class="btn btn--ghost btn--hero" href="#contact">
-                  <svg class="icon"><use href="#i-mail"></use></svg>
-                  <span class="btn__label">Start a Project</span>
-                </a>
-              </div>
-            </div>
+          <div class="hero-editorial__actions">
+            <button
+              class="btn btn--solid"
+              type="button"
+              data-lightbox
+              data-gallery="hero-reel"
+              data-src="assets/videos/showreel.mp4"
+              data-poster="assets/posters/showreel.jpg"
+              data-title="2026 Showreel"
+              data-category="Showreel"
+              data-duration="0:20"
+              data-orientation="landscape"
+            >
+              <svg class="icon"><use href="#i-play"></use></svg>
+              <span class="btn__label">Watch Showreel</span>
+            </button>
+            <a class="btn btn--ghost" href="#contact">
+              <svg class="icon"><use href="#i-mail"></use></svg>
+              <span class="btn__label">Start a Project</span>
+            </a>
+          </div>
 
-            <div class="hero__device">
-              <div class="macbook" role="img" aria-label="Minhaj Motion showreel playing on a MacBook Pro">
-                <div class="macbook__lid">
-                  <div class="macbook__bezel">
-                    <span class="macbook__camera" aria-hidden="true"></span>
-                    <div class="macbook__screen">
-                      <video
-                        class="macbook__video"
-                        src="assets/videos/showreel.mp4"
-                        poster="assets/posters/showreel.jpg"
-                        autoplay
-                        muted
-                        loop
-                        playsinline
-                        preload="metadata"
-                        tabindex="-1"
-                        aria-hidden="true"
-                      ></video>
-                      <div class="macbook__ui" aria-hidden="true">
-                        <span class="macbook__brand">MINHAJ MOTION</span>
-                        <span class="macbook__status"><i></i> SHOWREEL &rsquo;26</span>
-                      </div>
-                      <span class="macbook__glare" aria-hidden="true"></span>
-                    </div>
-                    <span class="macbook__label" aria-hidden="true">MacBook Pro</span>
-                  </div>
-                </div>
-                <div class="macbook__base">
-                  <span class="macbook__notch" aria-hidden="true"></span>
-                  <span class="macbook__foot" aria-hidden="true"></span>
-                </div>
-              </div>
-              <div class="hero__device-caption" aria-hidden="true">
-                <span>Showreel &rsquo;26</span>
-                <span>00:20 &middot; muted loop</span>
-              </div>
-            </div>
+          <div class="hero-editorial__visual">
+            <button
+              class="hero-editorial__glass"
+              type="button"
+              data-hero-card
+              data-lightbox
+              data-gallery="hero-reel"
+              data-src="assets/videos/showreel.mp4"
+              data-poster="assets/posters/showreel.jpg"
+              data-title="2026 Showreel"
+              data-category="Showreel"
+              data-duration="0:20"
+              data-orientation="landscape"
+            >
+              <span class="hero-editorial__media">
+                <video
+                  class="hero-editorial__video"
+                  src="assets/videos/showreel.mp4"
+                  poster="assets/posters/showreel.jpg"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  tabindex="-1"
+                  aria-hidden="true"
+                ></video>
+                <span class="hero-editorial__shade" aria-hidden="true"></span>
+                <span class="hero-editorial__badge">Showreel &rsquo;26</span>
+                <span class="hero-editorial__play" aria-hidden="true">
+                  <span><svg class="icon"><use href="#i-play"></use></svg></span>
+                </span>
+                <span class="hero-editorial__caption">Play with sound &middot; 0:20</span>
+              </span>
+            </button>
           </div>
         </div>
       </section>
@@ -316,9 +312,9 @@
       <!-- ======================= Selected work / Showreel ======================= -->
       <section class="section" id="work">
         <div class="container">
-          <div class="work-masthead reveal">
+          <div class="work-masthead">
             <div class="work-masthead__intro">
-              <span class="eyebrow">— Selected work</span>
+              <span class="eyebrow">- Selected work</span>
               <h2>Edits that hold attention.</h2>
             </div>
             <div class="work-masthead__aside">
@@ -333,7 +329,7 @@
             </div>
           </div>
 
-          <div class="showreel reveal" data-delay="1">
+          <div class="showreel">
             <button class="showreel__media" type="button" data-lightbox data-gallery="showreel" data-src="assets/videos/showreel.mp4" data-poster="assets/posters/showreel.jpg" data-title="2026 Showreel" data-category="Showreel" data-duration="0:20">
               <img src="assets/posters/showreel.jpg" alt="Minhaj Motion showreel cover" />
               <span class="showreel__shade" aria-hidden="true"></span>
@@ -984,7 +980,7 @@
     <!-- ============================ Lightbox ============================ -->
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player" hidden>
       <div class="lightbox__backdrop" data-close></div>
-      <div class="lightbox__dialog">
+      <div class="lightbox__dialog" data-lenis-prevent>
         <div class="lightbox__bar">
           <div class="lightbox__meta">
             <span class="lightbox__cat" id="lbCat">Short-form</span>
@@ -1011,8 +1007,13 @@
 
     <div class="grain" aria-hidden="true"></div>
 
+    <script src="assets/vendor/lenis.min.js"></script>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script src="assets/vendor/ScrollTrigger.min.js"></script>
     <script src="light-rays.js"></script>
     <script src="pixel-card.js"></script>
     <script src="script.js"></script>
+    <script src="hero-3d.js"></script>
+    <script src="hero-particles.js"></script>
   </body>
 </html>

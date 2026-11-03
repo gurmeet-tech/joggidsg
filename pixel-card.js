@@ -482,16 +482,16 @@
     if (button.hasAttribute("data-pixel-card")) return;
 
     button.setAttribute("data-pixel-card", "");
-    button.dataset.pixelGap = "7";
-    button.dataset.pixelSize = "1.5";
-    button.dataset.pixelSpeed = "16";
-    button.dataset.pixelOpacity = "0.38";
-    button.dataset.pixelFade = "0.5";
-    button.dataset.pixelGlow = "0.12";
-    button.dataset.pixelSpotlight = "0.2";
-    button.dataset.pixelReveal = "460";
+    button.dataset.pixelGap = "5";
+    button.dataset.pixelSize = "1.8";
+    button.dataset.pixelSpeed = "30";
+    button.dataset.pixelOpacity = "0.78";
+    button.dataset.pixelFade = "0.42";
+    button.dataset.pixelGlow = "0.26";
+    button.dataset.pixelSpotlight = "0.48";
+    button.dataset.pixelReveal = "440";
     button.dataset.pixelIntro = "false";
-    button.dataset.pixelClickPulse = "true";
+    button.dataset.pixelClickPulse = "false";
 
     const canvas = document.createElement("canvas");
     canvas.className = "pixel-card__canvas";

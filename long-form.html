@@ -112,7 +112,7 @@
         </div>
       </div>
 
-      <div class="mobile-menu" id="mobileMenu" hidden>
+      <div class="mobile-menu" id="mobileMenu" hidden data-lenis-prevent>
         <nav class="container" aria-label="Mobile">
           <a href="index.html">Home <span>01</span></a>
           <a href="short-form.html">Short-form <span>02</span></a>
@@ -237,7 +237,7 @@
 
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player" hidden>
       <div class="lightbox__backdrop" data-close></div>
-      <div class="lightbox__dialog">
+      <div class="lightbox__dialog" data-lenis-prevent>
         <div class="lightbox__bar">
           <div class="lightbox__meta">
             <span class="lightbox__cat" id="lbCat">Long-form</span>
@@ -263,6 +263,7 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <div class="grain" aria-hidden="true"></div>
 
+    <script src="assets/vendor/lenis.min.js"></script>
     <script src="pixel-card.js"></script>
     <script src="script.js"></script>
   </body>

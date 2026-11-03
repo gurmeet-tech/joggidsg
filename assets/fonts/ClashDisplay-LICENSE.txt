@@ -1,0 +1,10 @@
+Clash Display is distributed by Fontshare, a service from the Indian Type Foundry.
+
+License: ITF Free Font License (free for personal and commercial use).
+Source: https://www.fontshare.com/fonts/clash-display
+License details: https://www.fontshare.com/licenses/itf-ffl
+
+Vendored files:
+- ClashDisplay-Regular.woff2 (400)
+- ClashDisplay-Medium.woff2 (500)
+- ClashDisplay-Semibold.woff2 (600)

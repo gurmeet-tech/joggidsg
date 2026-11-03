@@ -9,22 +9,85 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  /* ---------------------------------------------------------------- Hero reel */
-  const heroReel = $(".macbook__video");
-  if (heroReel) {
-    if (reducedMotion) {
-      heroReel.removeAttribute("autoplay");
-      heroReel.pause();
-    }
-    const syncHeroReel = () => {
-      if (document.hidden) {
-        heroReel.pause();
-      } else if (!reducedMotion) {
-        heroReel.play().catch(() => {});
+  /* ------------------------------------------------------------ Smooth scroll */
+  const smoothScroll =
+    window.Lenis && !reducedMotion
+      ? new window.Lenis({
+          lerp: 0.085,
+          wheelMultiplier: 0.9,
+          touchMultiplier: 1.1,
+          smoothWheel: true,
+          syncTouch: false,
+          anchors: true,
+          autoRaf: true,
+          respectReducedMotion: true,
+        })
+      : null;
+
+  window.__mmLenis = smoothScroll;
+  window.__mmReducedMotion = reducedMotion;
+
+  if (smoothScroll && document.documentElement.classList.contains("is-loading")) {
+    smoothScroll.stop();
+  }
+
+  /* ------------------------------------------------------- Floating navigation */
+  const siteHeader = $("#siteHeader");
+  if (siteHeader) {
+    let lastScrollY = window.scrollY;
+    let headerFrame = 0;
+
+    const updateHeader = () => {
+      headerFrame = 0;
+      const y = window.scrollY;
+      const maxScroll = Math.max(
+        1,
+        document.documentElement.scrollHeight - window.innerHeight
+      );
+      siteHeader.style.setProperty(
+        "--nav-progress",
+        Math.min(1, Math.max(0, y / maxScroll)).toFixed(4)
+      );
+
+      if (y > 120 && y > lastScrollY + 2) {
+        siteHeader.classList.add("is-condensed");
+      } else if (y < lastScrollY - 2 || y <= 96) {
+        siteHeader.classList.remove("is-condensed");
       }
+
+      lastScrollY = y;
     };
-    document.addEventListener("visibilitychange", syncHeroReel);
-    window.addEventListener("load", syncHeroReel);
+
+    const requestHeaderUpdate = () => {
+      if (headerFrame) return;
+      headerFrame = window.requestAnimationFrame(updateHeader);
+    };
+
+    window.addEventListener("scroll", requestHeaderUpdate, { passive: true });
+    window.addEventListener("resize", requestHeaderUpdate);
+    updateHeader();
+  }
+
+  /* ---------------------------------------------------------------- Hero reel */
+  const heroReels = $$(".macbook__video, .hero-editorial__video");
+  if (heroReels.length) {
+    if (reducedMotion) {
+      heroReels.forEach((video) => {
+        video.removeAttribute("autoplay");
+        video.pause();
+      });
+    }
+    const syncHeroReels = () => {
+      heroReels.forEach((video) => {
+        if (document.hidden) {
+          video.pause();
+        } else if (!reducedMotion) {
+          video.play().catch(() => {});
+        }
+      });
+    };
+    document.addEventListener("visibilitychange", syncHeroReels);
+    window.addEventListener("load", syncHeroReels);
   }
 
   /* --------------------------------------------------------------- Intro loader */
@@ -36,6 +99,7 @@
     if (introMode !== "play" || !preloader) {
       if (preloader) preloader.remove();
       root.classList.remove("is-loading");
+      if (smoothScroll) smoothScroll.start();
       return;
     }
 
@@ -64,6 +128,7 @@
       regions.forEach((el) => {
         el.inert = false;
       });
+      if (smoothScroll) smoothScroll.start();
       try {
         sessionStorage.setItem("mm-intro-seen", "1");
       } catch (e) {}
@@ -80,6 +145,7 @@
       regions.forEach((el) => {
         el.inert = false;
       });
+      if (smoothScroll) smoothScroll.start();
       timers.push(window.setTimeout(finalize, 1000));
     };
 
@@ -130,10 +196,12 @@
   const mobileMenu = $("#mobileMenu");
 
   function closeMenu() {
-    if (!menuToggle || !mobileMenu) return;
+    if (!menuToggle || !mobileMenu || mobileMenu.hidden) return;
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.setAttribute("aria-label", "Open menu");
     mobileMenu.hidden = true;
+    document.body.classList.remove("no-scroll");
+    if (smoothScroll) smoothScroll.start();
   }
 
   if (menuToggle && mobileMenu) {
@@ -145,6 +213,8 @@
         menuToggle.setAttribute("aria-expanded", "true");
         menuToggle.setAttribute("aria-label", "Close menu");
         mobileMenu.hidden = false;
+        document.body.classList.add("no-scroll");
+        if (smoothScroll) smoothScroll.stop();
       }
     });
 
@@ -434,6 +504,7 @@
     lastFocused = document.activeElement;
     lightbox.hidden = false;
     document.body.classList.add("no-scroll");
+    if (smoothScroll) smoothScroll.stop();
     showItem(current);
     const closeBtn = $(".lightbox__btn--close", lightbox);
     if (closeBtn) window.setTimeout(() => closeBtn.focus(), 60);
@@ -443,6 +514,7 @@
     if (lightbox.hidden) return;
     lightbox.hidden = true;
     document.body.classList.remove("no-scroll");
+    if (smoothScroll) smoothScroll.start();
     lbVideo.pause();
     lbVideo.removeAttribute("src");
     lbVideo.load();
@@ -632,6 +704,24 @@
   document.addEventListener("selectstart", (event) => {
     if (isMediaTarget(event.target)) event.preventDefault();
   });
+
+  /* ---------------------------------------------------------- Button feedback */
+  if (!reducedMotion) {
+    $$(".btn").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const rect = button.getBoundingClientRect();
+        const fromKeyboard = event.detail === 0;
+        const ripple = document.createElement("span");
+        ripple.className = "btn-grid-ripple";
+        ripple.style.left =
+          (fromKeyboard ? rect.width / 2 : event.clientX - rect.left) + "px";
+        ripple.style.top =
+          (fromKeyboard ? rect.height / 2 : event.clientY - rect.top) + "px";
+        ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
+        button.appendChild(ripple);
+      });
+    });
+  }
 
   /* ------------------------------------------------------------------- Misc */
   const yearEl = $("#year");
