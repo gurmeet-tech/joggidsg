@@ -416,9 +416,9 @@ button {
 .eyebrow {
   display: inline-block;
   font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.34em;
+  font-size: 12px;
+  font-weight: 550;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -2991,18 +2991,15 @@ a.contact-card:hover .contact-card__arrow {
 
 .site-footer__nav {
   display: flex;
-  gap: 24px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
 .site-footer__nav a {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--muted);
-  transition: color 0.25s;
-}
-
-.site-footer__nav a:hover {
-  color: var(--fg);
 }
 
 .site-footer__social {
@@ -3049,46 +3046,6 @@ a.contact-card:hover .contact-card__arrow {
   user-select: none;
   cursor: default;
   isolation: isolate;
-  transition: opacity 0.5s var(--ease);
-}
-
-.site-footer__mark::before {
-  content: "";
-  position: absolute;
-  inset: -16% -6%;
-  z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at var(--mx, 50%) var(--my, 50%),
-    var(--brand-soft),
-    transparent 40%
-  );
-  filter: blur(42px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.45s var(--ease);
-}
-
-.site-footer__mark.is-live::before {
-  opacity: 1;
-}
-
-.site-footer__char {
-  display: inline-block;
-  transform-origin: 50% 80%;
-  transition: color 0.35s var(--ease), -webkit-text-stroke-color 0.35s var(--ease),
-    text-shadow 0.35s var(--ease);
-}
-
-.site-footer__char.is-space {
-  width: 0.21em;
-}
-
-.site-footer__char.is-lit {
-  color: var(--brand);
-  -webkit-text-fill-color: var(--brand);
-  -webkit-text-stroke-color: var(--brand);
-  text-shadow: 0 0 22px var(--brand-soft), 0 0 54px var(--brand-soft);
 }
 
 .site-footer__bottom {
@@ -3100,14 +3057,14 @@ a.contact-card:hover .contact-card__arrow {
   padding-block: 26px 30px;
   margin-top: 8px;
   border-top: 1px solid var(--border);
-  font-size: 11px;
+  font-size: 12.5px;
   color: var(--muted-2);
 }
 
 .site-footer__meta {
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-size: 9.5px;
+  font-size: 11px;
 }
 
 .site-footer__top-link {
@@ -3115,11 +3072,6 @@ a.contact-card:hover .contact-card__arrow {
   align-items: center;
   gap: 6px;
   color: var(--muted);
-  transition: color 0.25s;
-}
-
-.site-footer__top-link:hover {
-  color: var(--fg);
 }
 
 .site-footer__top-link .icon {
@@ -6544,25 +6496,8 @@ html[data-theme="light"] .testimonials__watermark svg {
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
 }
 
-.booking-calendar__day:not(:disabled):hover {
-  border-color: var(--border-strong);
-  background: var(--wash);
-}
-
 .booking-calendar__day.is-today {
   border-color: color-mix(in srgb, var(--accent-blue) 50%, var(--border));
-}
-
-.booking-calendar__day.has-slots::after {
-  content: "";
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--accent-blue);
-  transform: translateX(-50%);
 }
 
 .booking-calendar__day.is-selected {
@@ -6570,10 +6505,6 @@ html[data-theme="light"] .testimonials__watermark svg {
   background: var(--fg);
   color: var(--bg);
   transform: translateY(-1px);
-}
-
-.booking-calendar__day.is-selected::after {
-  background: var(--bg);
 }
 
 .booking-calendar__day:disabled {
@@ -7971,92 +7902,79 @@ body {
   }
 }
 
-/* Booking date dots: 7 x 7 px, no hover feedback, 24 px invisible tap target. */
+/* Calendar dates: compact square buttons, no dots, no hover feedback. */
 .booking-calendar__day {
-  --day-fill: color-mix(in srgb, var(--muted-2) 38%, transparent);
-  --day-border: transparent;
-  position: relative;
-  width: 7px;
-  height: 7px;
+  --day-bg: var(--card);
+  --day-border: var(--border);
+  --day-color: var(--muted);
+  width: 32px;
+  height: 32px;
   min-height: 0;
   aspect-ratio: 1;
   padding: 0;
-  border: 0;
-  border-color: var(--day-border);
-  border-radius: 50%;
   justify-self: center;
   align-self: center;
-  color: transparent;
-  background: var(--day-fill);
-  font-size: 0;
-  line-height: 0;
+  border: 1px solid var(--day-border);
+  border-radius: 8px;
+  background: var(--day-bg);
+  color: var(--day-color);
+  font-size: 10.5px;
+  font-weight: 550;
   transform: none;
-  cursor: default;
   transition: none;
 }
 
-.booking-calendar__day::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 24px;
-  height: 24px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-}
-
 .booking-calendar__day.has-slots {
-  --day-fill: color-mix(in srgb, var(--fg) 84%, transparent);
-}
-
-.booking-calendar__day.has-slots::after {
-  display: none;
+  --day-color: var(--fg);
 }
 
 .booking-calendar__day.is-today {
-  --day-border: color-mix(in srgb, var(--accent-blue) 70%, transparent);
-  border-color: var(--day-border);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-blue) 70%, transparent);
+  --day-border: color-mix(in srgb, var(--accent-blue) 60%, var(--border));
 }
 
 .booking-calendar__day.is-selected {
-  --day-fill: var(--fg);
-  --day-border: transparent;
+  --day-bg: var(--fg);
+  --day-border: var(--fg);
+  --day-color: var(--bg);
   border-color: var(--day-border);
-  color: transparent;
+  background: var(--day-bg);
+  color: var(--day-color);
   transform: none;
-  box-shadow: 0 0 0 2px var(--bg-soft), 0 0 0 4px var(--fg);
 }
 
 .booking-calendar__day:disabled {
-  opacity: 0.16;
-  cursor: not-allowed;
-}
-
-.booking-calendar__day:not(:disabled):hover {
+  --day-bg: transparent;
+  --day-border: transparent;
+  --day-color: color-mix(in srgb, var(--muted-2) 42%, transparent);
   border-color: var(--day-border);
-  background: var(--day-fill);
+  background: var(--day-bg);
+  color: var(--day-color);
 }
 
 .booking-calendar__day:focus-visible {
-  outline: 1px solid var(--fg);
-  outline-offset: 3px;
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
 }
 
-/* Keep the calendar rows readable while the date itself is a 7 px dot. */
+.booking-calendar__weekdays,
 .booking-calendar__grid {
-  grid-auto-rows: 42px;
+  max-width: 360px;
+  margin-inline: auto;
 }
 
 @media (max-width: 720px) {
-  .booking-calendar__grid {
-    grid-auto-rows: 29px;
+  .booking-calendar__day {
+    width: 29px;
+    height: 29px;
+    border-radius: 7px;
+    font-size: 10px;
   }
 }
 
 @media (max-width: 380px) {
-  .booking-calendar__grid {
-    grid-auto-rows: 26px;
+  .booking-calendar__day {
+    width: 26px;
+    height: 26px;
+    font-size: 9.5px;
   }
 }

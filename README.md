@@ -85,10 +85,10 @@ three-slice intro; `?intro=0` skips it and `?intro=1` forces it.
 - **Device-aware theme defaults** - mobile and tablet open in light mode, desktop
   opens in dark mode. An explicit choice is saved in `localStorage` under
   `mm-theme` and wins on later visits.
-- **Minimal booking flow** - `#book` is a compact calendar with weekday-only
-  7 px date dots, available times and a prefilled email request. The date dots
-  have no hover animation, keep a 24 px tap target and use native buttons and
-  default cursors, with no backend dependency.
+- **Minimal booking flow** - `#book` is a compact calendar with small square
+  date buttons, weekday and weekend availability, and a prefilled email request.
+  The dates have no hover animation and use native buttons and default cursors,
+  with no backend dependency.
 - **Editorial reviews** - rounded cards with a faint brand watermark, a stronger
   card silhouette, quote detail and clear Book a call / See the work CTAs.
 - **MagicBento values grid** - a vanilla spotlight/border port with keyboard
@@ -141,8 +141,8 @@ HLS with a licence server, or visible per-viewer watermarking.
   (`index.html`, `short-form.html`, `long-form.html`). The current `wa.me` link
   opens WhatsApp with a prefilled message but no fixed recipient.
 - Booking logic lives in `script.js` under `Booking calendar`; styles live under
-  `.booking` and `.booking-calendar` in `styles.css`. It creates weekday slots
-  and builds a `mailto:` request for the selected date/time.
+  `.booking` and `.booking-calendar` in `styles.css`. It creates weekday and
+  weekend slots and builds a `mailto:` request for the selected date/time.
 - LightRays is configured with `data-rays-*` attributes on the hero container.
   Particle density, palette and exit fade live in `hero-particles.js`; the beam
   mask is in `styles.css` under `.hero-editorial__particles`.

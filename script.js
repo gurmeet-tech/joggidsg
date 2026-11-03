@@ -364,7 +364,6 @@
       a.getFullYear() === b.getFullYear() &&
       a.getMonth() === b.getMonth() &&
       a.getDate() === b.getDate();
-    const isWeekend = (date) => date.getDay() === 0 || date.getDay() === 6;
     const dateKey = (date) =>
       date.getFullYear() +
       "-" +
@@ -372,14 +371,10 @@
       "-" +
       String(date.getDate()).padStart(2, "0");
 
-    const nextWeekday = (from) => {
-      const date = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 1);
-      while (isWeekend(date)) date.setDate(date.getDate() + 1);
-      return date;
-    };
+    const nextAvailableDay = (from) =>
+      new Date(from.getFullYear(), from.getMonth(), from.getDate() + 1);
 
     const availableTimes = (date) => {
-      if (isWeekend(date)) return [];
       if (date.getDay() === 5) return slots.slice(0, 3);
       if (date.getDay() === 1) return slots.slice(1);
       return slots;
@@ -388,7 +383,7 @@
     const today = startOfDay(new Date());
     const minMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const maxMonth = new Date(today.getFullYear(), today.getMonth() + 6, 1);
-    let selectedDate = nextWeekday(today);
+    let selectedDate = nextAvailableDay(today);
     let viewDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
     let selectedTime = availableTimes(selectedDate)[0] || "";
 
@@ -488,7 +483,7 @@
 
       for (let day = 1; day <= totalDays; day++) {
         const date = new Date(year, month, day);
-        const disabled = date < today || isWeekend(date);
+        const disabled = date < today;
         const button = document.createElement("button");
         button.type = "button";
         button.className = "booking-calendar__day";
@@ -797,60 +792,6 @@
       }
     });
   });
-
-  /* --------------------------------------------------------- Footer wordmark */
-  const footerMark = $("#footerMark");
-  if (footerMark) {
-    const text = footerMark.textContent.trim();
-    const chars = [];
-    footerMark.textContent = "";
-    Array.from(text).forEach((character) => {
-      const span = document.createElement("span");
-      span.className = "site-footer__char";
-      span.textContent = character;
-      if (character === " ") span.classList.add("is-space");
-      footerMark.appendChild(span);
-      chars.push(span);
-    });
-
-    if (canHover && !reducedMotion) {
-      let frame = 0;
-      let pointerX = 0;
-      let pointerY = 0;
-
-      const clear = () => {
-        chars.forEach((char) => char.classList.remove("is-lit"));
-      };
-
-      const update = () => {
-        frame = 0;
-        const rect = footerMark.getBoundingClientRect();
-        footerMark.style.setProperty("--mx", pointerX - rect.left + "px");
-        footerMark.style.setProperty("--my", pointerY - rect.top + "px");
-        const radius = Math.max(130, Math.min(280, rect.width * 0.145));
-
-        chars.forEach((char) => {
-          if (char.classList.contains("is-space")) return;
-          const box = char.getBoundingClientRect();
-          const dx = box.left + box.width / 2 - pointerX;
-          const dy = box.top + box.height / 2 - pointerY;
-          const distance = Math.hypot(dx, dy);
-          char.classList.toggle("is-lit", distance < radius * 0.78);
-        });
-      };
-
-      footerMark.addEventListener("pointerenter", () => footerMark.classList.add("is-live"));
-      footerMark.addEventListener("pointermove", (event) => {
-        pointerX = event.clientX;
-        pointerY = event.clientY;
-        if (!frame) frame = window.requestAnimationFrame(update);
-      });
-      footerMark.addEventListener("pointerleave", () => {
-        footerMark.classList.remove("is-live");
-        clear();
-      });
-    }
-  }
 
   /* ------------------------------------------------------- Media protections */
   function hardenMedia() {
