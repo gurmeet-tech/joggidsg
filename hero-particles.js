@@ -58,8 +58,9 @@
     if (!spriteCtx) return sprite;
     const gradient = spriteCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
     gradient.addColorStop(0, rgba(color, 1));
-    gradient.addColorStop(0.22, rgba(color, 0.86));
-    gradient.addColorStop(0.55, rgba(color, 0.24));
+    gradient.addColorStop(0.16, rgba(color, 0.86));
+    gradient.addColorStop(0.38, rgba(color, 0.32));
+    gradient.addColorStop(0.7, rgba(color, 0.06));
     gradient.addColorStop(1, rgba(color, 0));
     spriteCtx.fillStyle = gradient;
     spriteCtx.fillRect(0, 0, 64, 64);
@@ -75,33 +76,38 @@
   };
 
   const spawn = (seeded) => {
-    const angle = random(-0.22, 0.22);
-    const speed = random(18, 54);
-    const life = random(6800, 12400);
-    const born = seeded ? Math.random() * life * 0.64 : 0;
+    const angle = random(-0.13, 0.13);
+    const speed = random(9, 27);
+    const life = random(11000, 22000);
+    const born = seeded ? Math.random() * life * 0.82 : 0;
     const startY = seeded
-      ? -18 + (born / life) * height * 0.64
-      : -18 - Math.random() * height * 0.08;
-    const drift = random(-5, 5);
+      ? -height * 0.04 + (born / life) * height * 0.8
+      : -12 - Math.random() * height * 0.06;
+    const beamHalf = width * (0.012 + clamp(startY / height, 0, 1) * 0.17);
+    const x = width * 0.5 + random(-beamHalf, beamHalf);
+    const rare = Math.random() < 0.055;
     return {
-      x: width * 0.5 + random(-width * 0.026, width * 0.026),
+      x: x,
       y: startY,
-      vx: Math.sin(angle) * speed * 0.45 + drift,
+      vx: Math.sin(angle) * speed * 0.35 + random(-3.2, 3.2) + (x - width * 0.5) * 0.0015,
       vy: Math.cos(angle) * speed,
-      size: random(4.5, 11),
+      size: rare ? random(2.5, 3.6) : random(0.65, 2.15),
       age: born,
       life: life,
-      alpha: random(0.22, 0.62),
-      tint: Math.random() < 0.22 ? 1 : 0,
+      alpha: rare ? random(0.16, 0.34) : random(0.07, 0.28),
+      tint: Math.random() < 0.14 ? 1 : 0,
       phase: Math.random() * Math.PI * 2,
-      twinkle: random(0.7, 1.5),
+      twinkle: random(0.35, 1.15),
+      wobble: random(0.5, 3.8),
+      drift: random(0.4, 1.3),
     };
   };
 
   const fill = () => {
-    const count = Math.min(
-      window.innerWidth < 721 ? 34 : 58,
-      Math.max(18, Math.round((width * height) / 26000))
+    const count = clamp(
+      Math.round((width * height) / 10500),
+      window.innerWidth < 721 ? 46 : 72,
+      window.innerWidth < 721 ? 76 : 138
     );
     particles = [];
     for (let i = 0; i < count; i++) particles.push(spawn(true));
@@ -111,7 +117,7 @@
     const rect = hero.getBoundingClientRect();
     width = Math.max(1, Math.round(rect.width));
     height = Math.max(1, Math.round(rect.height));
-    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -129,26 +135,28 @@
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       p.age += dt * 1000;
-      p.x += p.vx * dt;
+      p.x += p.vx * dt * p.drift;
       p.y += p.vy * dt;
 
-      if (p.age >= p.life || p.y > height * 0.86) {
+      if (p.age >= p.life || p.y > height * 0.9) {
         particles[i] = spawn(false);
         continue;
       }
 
       const lifeProgress = clamp(p.age / p.life, 0, 1);
-      const depthFade = 1 - smoothstep(height * 0.52, height * 0.84, p.y);
-      const lifeFade = 1 - smoothstep(0.5, 1, lifeProgress);
+      const depthFade = 1 - smoothstep(height * 0.6, height * 0.88, p.y);
+      const lifeFade =
+        smoothstep(0, 0.06, lifeProgress) * (1 - smoothstep(0.72, 1, lifeProgress));
       const exit = 1 - Math.min(depthFade, lifeFade);
-      const twinkle = 0.76 + 0.24 * Math.sin(now * 0.0016 * p.twinkle + p.phase);
+      const twinkle = 0.88 + 0.12 * Math.sin(now * 0.0011 * p.twinkle + p.phase);
       const alpha = p.alpha * depthFade * lifeFade * twinkle;
       if (alpha <= 0.002) continue;
 
-      const size = p.size * (1 + exit * 3.8);
+      const drawX = p.x + Math.sin(now * 0.00035 * p.twinkle + p.phase) * p.wobble;
+      const size = p.size * (1 + exit * 1.15);
       const sprite = sprites[p.tint];
       ctx.globalAlpha = alpha;
-      ctx.drawImage(sprite, p.x - size * 0.5, p.y - size * 0.5, size, size);
+      ctx.drawImage(sprite, drawX - size * 0.5, p.y - size * 0.5, size, size);
     }
 
     ctx.globalAlpha = 1;

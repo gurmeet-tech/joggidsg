@@ -26,11 +26,6 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const lenis = window.__mmLenis;
-  if (lenis && typeof lenis.on === "function") {
-    lenis.on("scroll", ScrollTrigger.update);
-  }
-
   const state = {
     desktop: {
       rotateX: 15,

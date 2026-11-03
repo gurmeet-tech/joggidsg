@@ -21,15 +21,27 @@
     <link rel="icon" type="image/png" href="assets/img/logo.png" />
     <link rel="preload" href="assets/fonts/CreatoDisplay-Black.woff" as="font" type="font/woff" crossorigin />
     <link rel="preload" href="assets/fonts/CreatoDisplay-Bold.woff" as="font" type="font/woff" crossorigin />
+    <link rel="preload" href="assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="styles.css" />
     <script>
       (function () {
         var root = document.documentElement;
         root.classList.add("js");
+        var theme = null;
         try {
           var t = localStorage.getItem("mm-theme");
-          if (t === "light" || t === "dark") root.setAttribute("data-theme", t);
+          if (t === "light" || t === "dark") theme = t;
         } catch (e) {}
+        if (!theme) {
+          try {
+            theme = window.matchMedia("(max-width: 1024px)").matches ? "light" : "dark";
+          } catch (e) {
+            theme = "dark";
+          }
+        }
+        root.setAttribute("data-theme", theme);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", theme === "dark" ? "#0a0a0b" : "#f5f4f0");
       })();
     </script>
     <noscript><style>.js .reveal{opacity:1;transform:none}</style></noscript>
@@ -75,8 +87,6 @@
       </symbol>
     </svg>
 
-    <div class="scroll-progress" aria-hidden="true"><span></span></div>
-
     <header class="site-header" id="siteHeader">
       <div class="container site-header__inner">
         <a class="brand" href="index.html">
@@ -85,23 +95,33 @@
           <span class="visually-hidden">— home</span>
         </a>
 
+        <div class="nav-island" aria-hidden="true">
+          <span class="nav-island__dot"></span>
+          <span class="nav-island__label">Short-form</span>
+        </div>
+
         <nav class="site-nav" aria-label="Primary">
           <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#work">Showreel</a></li>
             <li><a href="short-form.html" class="is-active" aria-current="page">Short-form</a></li>
             <li><a href="long-form.html">Long-form</a></li>
-            <li><a href="index.html#work">Showreel</a></li>
-            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#testimonials">Reviews</a></li>
             <li><a href="index.html#contact">Contact</a></li>
           </ul>
         </nav>
 
         <div class="site-header__actions">
+          <span class="nav-progress-arc" aria-hidden="true">
+            <svg viewBox="0 0 28 28" focusable="false">
+              <circle class="nav-progress-arc__track" cx="14" cy="14" r="11.5"></circle>
+              <circle class="nav-progress-arc__fill" cx="14" cy="14" r="11.5" pathLength="100"></circle>
+            </svg>
+          </span>
           <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
             <svg class="icon icon--sun"><use href="#i-sun"></use></svg>
             <svg class="icon icon--moon"><use href="#i-moon"></use></svg>
           </button>
-          <a class="btn btn--solid btn--sm site-header__hire" href="https://www.instagram.com/clipzy.media__/?hl=en" target="_blank" rel="noopener noreferrer">
+          <a class="btn btn--blue site-header__hire" href="https://www.instagram.com/clipzy.media__/?hl=en" target="_blank" rel="noopener noreferrer">
             Hire me
             <svg class="icon"><use href="#i-arrow"></use></svg>
           </a>
@@ -112,18 +132,23 @@
         </div>
       </div>
 
-      <div class="mobile-menu" id="mobileMenu" hidden data-lenis-prevent>
+      <div class="mobile-menu" id="mobileMenu" hidden>
         <nav class="container" aria-label="Mobile">
-          <a href="index.html">Home <span>01</span></a>
+          <a href="index.html#work">Showreel <span>01</span></a>
           <a href="short-form.html" aria-current="page">Short-form <span>02</span></a>
           <a href="long-form.html">Long-form <span>03</span></a>
-          <a href="index.html#work">Showreel <span>04</span></a>
-          <a href="index.html#about">About <span>05</span></a>
+          <a href="index.html#testimonials">Reviews <span>04</span></a>
+          <a href="index.html#faq">FAQ <span>05</span></a>
           <a href="index.html#contact">Contact <span>06</span></a>
+          <a href="index.html#book">Book a call <span>07</span></a>
         </nav>
         <div class="mobile-menu__foot container">
+          <a class="mobile-menu__about" href="index.html#about">
+            <span>About Minhaj</span>
+            <svg class="icon"><use href="#i-arrow"></use></svg>
+          </a>
           <span class="pill pill--dot"><i></i> Available for projects</span>
-          <a href="mailto:clipzymediaco@gmail.com">clipzymediaco@gmail.com</a>
+          <a class="mobile-menu__mail" href="mailto:clipzymediaco@gmail.com">clipzymediaco@gmail.com</a>
         </div>
       </div>
     </header>
@@ -279,9 +304,35 @@
       </div>
     </footer>
 
+    <a
+      class="whatsapp-fab"
+      href="https://wa.me/?text=Hi%20Minhaj%2C%20I%27d%20love%20to%20talk%20about%20a%20video%20edit."
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat with Minhaj on WhatsApp"
+    >
+      <span class="whatsapp-fab__stars" aria-hidden="true">
+        <svg class="whatsapp-star whatsapp-star--1" viewBox="0 0 24 24">
+          <path d="M12 2.6l2.6 6.15 6.65.55-5.05 4.34 1.54 6.5L12 16.9l-5.74 3.24 1.54-6.5L2.75 9.3l6.65-.55L12 2.6Z"></path>
+        </svg>
+        <svg class="whatsapp-star whatsapp-star--2" viewBox="0 0 24 24">
+          <path d="M12 2.6l2.6 6.15 6.65.55-5.05 4.34 1.54 6.5L12 16.9l-5.74 3.24 1.54-6.5L2.75 9.3l6.65-.55L12 2.6Z"></path>
+        </svg>
+        <svg class="whatsapp-star whatsapp-star--3" viewBox="0 0 24 24">
+          <path d="M12 2.6l2.6 6.15 6.65.55-5.05 4.34 1.54 6.5L12 16.9l-5.74 3.24 1.54-6.5L2.75 9.3l6.65-.55L12 2.6Z"></path>
+        </svg>
+      </span>
+      <span class="whatsapp-fab__label" aria-hidden="true">Let&rsquo;s talk</span>
+      <span class="whatsapp-fab__disc">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.174-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.693.625.711.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"></path>
+        </svg>
+      </span>
+    </a>
+
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player" hidden>
       <div class="lightbox__backdrop" data-close></div>
-      <div class="lightbox__dialog" data-lenis-prevent>
+      <div class="lightbox__dialog">
         <div class="lightbox__bar">
           <div class="lightbox__meta">
             <span class="lightbox__cat" id="lbCat">Short-form</span>
@@ -306,8 +357,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <div class="grain" aria-hidden="true"></div>
-
-    <script src="assets/vendor/lenis.min.js"></script>
     <script src="pixel-card.js"></script>
     <script src="script.js"></script>
   </body>

@@ -9,32 +9,12 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  /* ------------------------------------------------------------ Smooth scroll */
-  const smoothScroll =
-    window.Lenis && !reducedMotion
-      ? new window.Lenis({
-          lerp: 0.085,
-          wheelMultiplier: 0.9,
-          touchMultiplier: 1.1,
-          smoothWheel: true,
-          syncTouch: false,
-          anchors: true,
-          autoRaf: true,
-          respectReducedMotion: true,
-        })
-      : null;
-
-  window.__mmLenis = smoothScroll;
   window.__mmReducedMotion = reducedMotion;
-
-  if (smoothScroll && document.documentElement.classList.contains("is-loading")) {
-    smoothScroll.stop();
-  }
 
   /* ------------------------------------------------------- Floating navigation */
   const siteHeader = $("#siteHeader");
   if (siteHeader) {
-    let lastScrollY = window.scrollY;
+    const navArcFill = $(".nav-progress-arc__fill", siteHeader);
     let headerFrame = 0;
 
     const updateHeader = () => {
@@ -44,18 +24,19 @@
         1,
         document.documentElement.scrollHeight - window.innerHeight
       );
-      siteHeader.style.setProperty(
-        "--nav-progress",
-        Math.min(1, Math.max(0, y / maxScroll)).toFixed(4)
-      );
-
-      if (y > 120 && y > lastScrollY + 2) {
-        siteHeader.classList.add("is-condensed");
-      } else if (y < lastScrollY - 2 || y <= 96) {
-        siteHeader.classList.remove("is-condensed");
+      const progress = Math.min(1, Math.max(0, y / maxScroll));
+      siteHeader.style.setProperty("--nav-progress", progress.toFixed(4));
+      if (navArcFill) {
+        navArcFill.style.strokeDashoffset = (100 - progress * 100).toFixed(2);
       }
 
-      lastScrollY = y;
+      // Stay in the compact island on any upward scroll. Only the very top
+      // restores the full navigation bar.
+      if (y > 28) {
+        siteHeader.classList.add("is-condensed");
+      } else if (y <= 8) {
+        siteHeader.classList.remove("is-condensed");
+      }
     };
 
     const requestHeaderUpdate = () => {
@@ -99,7 +80,6 @@
     if (introMode !== "play" || !preloader) {
       if (preloader) preloader.remove();
       root.classList.remove("is-loading");
-      if (smoothScroll) smoothScroll.start();
       return;
     }
 
@@ -128,7 +108,6 @@
       regions.forEach((el) => {
         el.inert = false;
       });
-      if (smoothScroll) smoothScroll.start();
       try {
         sessionStorage.setItem("mm-intro-seen", "1");
       } catch (e) {}
@@ -145,7 +124,6 @@
       regions.forEach((el) => {
         el.inert = false;
       });
-      if (smoothScroll) smoothScroll.start();
       timers.push(window.setTimeout(finalize, 1000));
     };
 
@@ -167,11 +145,13 @@
   const themeToggle = $("#themeToggle");
   const themeMeta = $('meta[name="theme-color"]');
 
-  function applyTheme(theme) {
+  function applyTheme(theme, persist) {
     document.documentElement.setAttribute("data-theme", theme);
-    try {
-      localStorage.setItem("mm-theme", theme);
-    } catch (e) {}
+    if (persist) {
+      try {
+        localStorage.setItem("mm-theme", theme);
+      } catch (e) {}
+    }
     if (themeToggle) {
       const next = theme === "dark" ? "light" : "dark";
       themeToggle.setAttribute("aria-label", "Switch to " + next + " mode");
@@ -184,10 +164,10 @@
   }
 
   if (themeToggle) {
-    applyTheme(document.documentElement.getAttribute("data-theme") || "dark");
+    applyTheme(document.documentElement.getAttribute("data-theme") || "dark", false);
     themeToggle.addEventListener("click", () => {
       const current = document.documentElement.getAttribute("data-theme");
-      applyTheme(current === "dark" ? "light" : "dark");
+      applyTheme(current === "dark" ? "light" : "dark", true);
     });
   }
 
@@ -201,7 +181,11 @@
     menuToggle.setAttribute("aria-label", "Open menu");
     mobileMenu.hidden = true;
     document.body.classList.remove("no-scroll");
-    if (smoothScroll) smoothScroll.start();
+    // Closing the sheet must not pop the island back open mid-page.
+    if (siteHeader) {
+      if (window.scrollY > 8) siteHeader.classList.add("is-condensed");
+      else siteHeader.classList.remove("is-condensed");
+    }
   }
 
   if (menuToggle && mobileMenu) {
@@ -214,7 +198,6 @@
         menuToggle.setAttribute("aria-label", "Close menu");
         mobileMenu.hidden = false;
         document.body.classList.add("no-scroll");
-        if (smoothScroll) smoothScroll.stop();
       }
     });
 
@@ -307,21 +290,25 @@
 
   /* ------------------------------------------------------------------ Header */
   const header = $("#siteHeader");
-  const progress = $(".scroll-progress span");
   const heroGhost = $(".hero__ghost");
   const navLinks = $$(".site-nav a[data-nav]");
-  const sectionIds = ["top", "work", "about", "testimonials", "faq", "contact"];
+  const navSectionLabel = $("#navSectionLabel");
+  const sectionLabels = {
+    top: "Home",
+    work: "Showreel",
+    about: "About",
+    testimonials: "Reviews",
+    faq: "FAQ",
+    contact: "Contact",
+    book: "Book a call",
+  };
+  const sectionIds = ["top", "work", "about", "testimonials", "faq", "contact", "book"];
   let ticking = false;
 
   function onScroll() {
     const y = window.scrollY || window.pageYOffset;
 
     if (header) header.classList.toggle("is-scrolled", y > 8);
-
-    if (progress) {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
-    }
 
     if (heroGhost && !reducedMotion) {
       heroGhost.style.transform = "translateX(-50%) translateY(" + Math.min(y * 0.09, 70) + "px)";
@@ -336,8 +323,14 @@
     });
     navLinks.forEach((link) => {
       const href = link.getAttribute("href");
-      link.classList.toggle("is-active", href === "#" + active);
+      const isActive = href === "#" + active;
+      link.classList.toggle("is-active", isActive);
+      if (isActive) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
     });
+    if (navSectionLabel) {
+      navSectionLabel.textContent = sectionLabels[active] || "Home";
+    }
 
     ticking = false;
   }
@@ -353,6 +346,196 @@
     { passive: true }
   );
   onScroll();
+
+  /* ---------------------------------------------------------- Booking calendar */
+  const bookingCalendar = $("[data-booking-calendar]");
+  if (bookingCalendar) {
+    const grid = $("[data-cal-grid]", bookingCalendar);
+    const slotsEl = $("[data-cal-slots]", bookingCalendar);
+    const title = $("[data-cal-title]", bookingCalendar);
+    const note = $("[data-cal-note]", bookingCalendar);
+    const cta = $("[data-cal-cta]", bookingCalendar);
+    const prevBtn = $("[data-cal-prev]", bookingCalendar);
+    const nextBtn = $("[data-cal-next]", bookingCalendar);
+    const slots = ["10:00", "11:30", "13:00", "14:30", "16:00"];
+
+    const startOfDay = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const sameDay = (a, b) =>
+      a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() &&
+      a.getDate() === b.getDate();
+    const isWeekend = (date) => date.getDay() === 0 || date.getDay() === 6;
+    const dateKey = (date) =>
+      date.getFullYear() +
+      "-" +
+      String(date.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(date.getDate()).padStart(2, "0");
+
+    const nextWeekday = (from) => {
+      const date = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 1);
+      while (isWeekend(date)) date.setDate(date.getDate() + 1);
+      return date;
+    };
+
+    const availableTimes = (date) => {
+      if (isWeekend(date)) return [];
+      if (date.getDay() === 5) return slots.slice(0, 3);
+      if (date.getDay() === 1) return slots.slice(1);
+      return slots;
+    };
+
+    const today = startOfDay(new Date());
+    const minMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const maxMonth = new Date(today.getFullYear(), today.getMonth() + 6, 1);
+    let selectedDate = nextWeekday(today);
+    let viewDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
+    let selectedTime = availableTimes(selectedDate)[0] || "";
+
+    function updateBookingSummary() {
+      if (!selectedDate) return;
+      const shortDate = selectedDate.toLocaleDateString("en-GB", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+      });
+      const longDate = selectedDate.toLocaleDateString("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      const subject = "Intro call — " + shortDate + (selectedTime ? " " + selectedTime : "");
+      const body =
+        "Hi Minhaj,\n\nI'd like to book the intro call on " +
+        longDate +
+        (selectedTime ? " at " + selectedTime + " GMT" : "") +
+        ".\n\nA little about my project: ";
+      if (note) {
+        note.textContent = selectedTime
+          ? longDate + " · " + selectedTime + " GMT · 30 minutes"
+          : "Choose an available time to continue.";
+      }
+      if (cta) {
+        cta.href =
+          "mailto:clipzymediaco@gmail.com?subject=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(body);
+      }
+    }
+
+    function renderSlots() {
+      if (!slotsEl || !selectedDate) return;
+      const times = availableTimes(selectedDate);
+      if (!times.includes(selectedTime)) selectedTime = times[0] || "";
+      slotsEl.innerHTML = "";
+      times.forEach((time) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "booking-calendar__slot";
+        button.textContent = time;
+        button.dataset.time = time;
+        button.setAttribute("aria-pressed", time === selectedTime ? "true" : "false");
+        if (time === selectedTime) button.classList.add("is-active");
+        button.addEventListener("click", () => {
+          selectedTime = time;
+          $$(".booking-calendar__slot", slotsEl).forEach((slot) => {
+            const active = slot.dataset.time === time;
+            slot.classList.toggle("is-active", active);
+            slot.setAttribute("aria-pressed", active ? "true" : "false");
+          });
+          updateBookingSummary();
+        });
+        slotsEl.appendChild(button);
+      });
+      updateBookingSummary();
+    }
+
+    function syncSelectedDay() {
+      if (!grid || !selectedDate) return;
+      const selectedKey = dateKey(selectedDate);
+      $$(".booking-calendar__day[data-date]", grid).forEach((button) => {
+        const active = button.dataset.date === selectedKey;
+        button.classList.toggle("is-selected", active);
+        button.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+
+    function renderCalendar() {
+      if (!grid) return;
+      const year = viewDate.getFullYear();
+      const month = viewDate.getMonth();
+      if (title) {
+        title.textContent = viewDate.toLocaleDateString("en-GB", {
+          month: "long",
+          year: "numeric",
+        });
+      }
+      if (prevBtn) prevBtn.disabled = viewDate <= minMonth;
+      if (nextBtn) nextBtn.disabled = viewDate >= maxMonth;
+
+      const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+      const totalDays = new Date(year, month + 1, 0).getDate();
+      grid.innerHTML = "";
+
+      for (let i = 0; i < firstWeekday; i++) {
+        const blank = document.createElement("span");
+        blank.className = "booking-calendar__day is-empty";
+        blank.setAttribute("aria-hidden", "true");
+        grid.appendChild(blank);
+      }
+
+      for (let day = 1; day <= totalDays; day++) {
+        const date = new Date(year, month, day);
+        const disabled = date < today || isWeekend(date);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "booking-calendar__day";
+        button.dataset.date = dateKey(date);
+        button.textContent = String(day);
+        button.setAttribute(
+          "aria-label",
+          date.toLocaleDateString("en-GB", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })
+        );
+        if (sameDay(date, today)) button.classList.add("is-today");
+        if (!disabled) button.classList.add("has-slots");
+        if (sameDay(date, selectedDate)) {
+          button.classList.add("is-selected");
+          button.setAttribute("aria-pressed", "true");
+        } else {
+          button.setAttribute("aria-pressed", "false");
+        }
+        button.disabled = disabled;
+        button.addEventListener("click", () => {
+          if (disabled) return;
+          selectedDate = date;
+          selectedTime = availableTimes(date)[0] || "";
+          syncSelectedDay();
+          renderSlots();
+        });
+        grid.appendChild(button);
+      }
+    }
+
+    const shiftMonth = (amount) => {
+      const next = new Date(viewDate.getFullYear(), viewDate.getMonth() + amount, 1);
+      if (next < minMonth || next > maxMonth) return;
+      viewDate = next;
+      renderCalendar();
+    };
+
+    if (prevBtn) prevBtn.addEventListener("click", () => shiftMonth(-1));
+    if (nextBtn) nextBtn.addEventListener("click", () => shiftMonth(1));
+
+    renderCalendar();
+    renderSlots();
+  }
 
   /* ----------------------------------------------------------------- Reveals */
   const revealEls = $$(".reveal");
@@ -504,7 +687,6 @@
     lastFocused = document.activeElement;
     lightbox.hidden = false;
     document.body.classList.add("no-scroll");
-    if (smoothScroll) smoothScroll.stop();
     showItem(current);
     const closeBtn = $(".lightbox__btn--close", lightbox);
     if (closeBtn) window.setTimeout(() => closeBtn.focus(), 60);
@@ -514,7 +696,6 @@
     if (lightbox.hidden) return;
     lightbox.hidden = true;
     document.body.classList.remove("no-scroll");
-    if (smoothScroll) smoothScroll.start();
     lbVideo.pause();
     lbVideo.removeAttribute("src");
     lbVideo.load();
