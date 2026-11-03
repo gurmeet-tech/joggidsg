@@ -66,11 +66,12 @@ three-slice intro; `?intro=0` skips it and `?intro=1` forces it.
   Pro. The screen autoplays the muted showreel, pauses when reduced motion is
   requested, and respects tab visibility. Animated LightRays sit behind the hero
   at 20% opacity.
-- **Creato Display CTAs** — buttons use Creato Display Bold with a canvas
-  PixelCard mosaic that keeps moving for as long as the pointer stays on the
-  button.
-- **Selected work grid** — ten homepage cards with All / Short-form / Long-form
-  / Motion filters, lazy hover previews and click-to-lightbox playback.
+- **Creato Display CTAs** — buttons use Creato Display Bold with a slow,
+  continuous sheen and a fine PixelCard mosaic that keeps moving for as long as
+  the pointer stays on the button.
+- **Selected work grid** — an editorial masthead, a Showreel feature and ten
+  homepage cards with All / Short-form / Long-form / Motion filters, consistent
+  landscape/portrait framing, lazy hover previews and click-to-lightbox playback.
 - **SF Pro body type** — secondary/UI copy uses SF Pro on Apple devices and
   native system fallbacks elsewhere; display and CTA fonts are unchanged.
 - **Animated intro** — three full-width typographic slices slide in from above

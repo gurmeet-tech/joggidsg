@@ -278,16 +278,18 @@
           if (twinkle) {
             const wave = Math.sin(state.phase[i] + state.time * frequency * state.rate[i]);
             size *= 0.62 + 0.38 * wave;
-            alpha += 0.12 * wave + (state.jitter[i] > 0.92 ? 0.35 * Math.max(0, wave) : 0);
+            alpha += 0.11 * wave + (state.jitter[i] > 0.97 ? 0.24 * Math.max(0, wave) : 0);
           }
           if (live) {
             // Keep the mosaic alive for as long as the pointer stays on the
-            // control. A slow diagonal sweep plus a per-pixel shimmer makes the
-            // grid read as a continuous effect, not a one-shot reveal.
-            const sweep = Math.sin(state.time * 2.15 - (x + y) * 0.045);
-            const shimmer = 0.5 + 0.5 * Math.sin(state.time * 1.65 + state.phase[i]);
-            size *= 1 + 0.2 * sweep + 0.08 * shimmer;
-            alpha += 0.1 * Math.max(0, sweep) + 0.035 * shimmer;
+            // control. Slow overlapping waves plus a travelling glint read as
+            // a deliberate sheen rather than random noise.
+            const sweep = Math.sin(state.time * 1.25 - (x + y) * 0.03);
+            const breathe = 0.5 + 0.5 * Math.sin(state.time * 0.75);
+            const progress = ((state.time * 0.16) % 1.25) - 0.125;
+            const glint = Math.exp(-Math.pow((x / width - progress) * 5.2, 2));
+            size *= 1 + 0.16 * sweep + 0.06 * breathe + 0.1 * glint;
+            alpha += 0.08 * Math.max(0, sweep) + 0.02 * breathe + 0.06 * glint;
           }
           size *= easeOutBack(presence);
           const flash = presence < 1 && state.active ? Math.sin(presence * Math.PI) : 0;
@@ -480,14 +482,14 @@
     if (button.hasAttribute("data-pixel-card")) return;
 
     button.setAttribute("data-pixel-card", "");
-    button.dataset.pixelGap = "6";
-    button.dataset.pixelSize = "1.6";
-    button.dataset.pixelSpeed = "18";
-    button.dataset.pixelOpacity = "0.42";
-    button.dataset.pixelFade = "0.45";
-    button.dataset.pixelGlow = "0.16";
-    button.dataset.pixelSpotlight = "0.28";
-    button.dataset.pixelReveal = "380";
+    button.dataset.pixelGap = "7";
+    button.dataset.pixelSize = "1.5";
+    button.dataset.pixelSpeed = "16";
+    button.dataset.pixelOpacity = "0.38";
+    button.dataset.pixelFade = "0.5";
+    button.dataset.pixelGlow = "0.12";
+    button.dataset.pixelSpotlight = "0.2";
+    button.dataset.pixelReveal = "460";
     button.dataset.pixelIntro = "false";
     button.dataset.pixelClickPulse = "true";
 
