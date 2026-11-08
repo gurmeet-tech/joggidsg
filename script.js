@@ -355,6 +355,7 @@
     const title = $("[data-cal-title]", bookingCalendar);
     const note = $("[data-cal-note]", bookingCalendar);
     const cta = $("[data-cal-cta]", bookingCalendar);
+    const ctaLabel = $("[data-cal-cta-label]", bookingCalendar);
     const prevBtn = $("[data-cal-prev]", bookingCalendar);
     const nextBtn = $("[data-cal-next]", bookingCalendar);
     const slots = ["10:00", "11:30", "13:00", "14:30", "16:00"];
@@ -374,15 +375,27 @@
     const nextAvailableDay = (from) =>
       new Date(from.getFullYear(), from.getMonth(), from.getDate() + 1);
 
-    const availableTimes = (date) => {
-      if (date.getDay() === 5) return slots.slice(0, 3);
-      if (date.getDay() === 1) return slots.slice(1);
-      return slots;
+    const timeToMinutes = (time) => {
+      const [hours, minutes] = time.split(":").map(Number);
+      return hours * 60 + minutes;
     };
 
     const today = startOfDay(new Date());
     const minMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const maxMonth = new Date(today.getFullYear(), today.getMonth() + 6, 1);
+
+    const availableTimes = (date) => {
+      let times = slots;
+      if (date.getDay() === 5) times = slots.slice(0, 3);
+      else if (date.getDay() === 1) times = slots.slice(1);
+      if (sameDay(date, today)) {
+        const now = new Date();
+        const currentMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
+        times = times.filter((time) => timeToMinutes(time) > currentMinutes + 30);
+      }
+      return times;
+    };
+
     let selectedDate = nextAvailableDay(today);
     let viewDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
     let selectedTime = availableTimes(selectedDate)[0] || "";
@@ -417,6 +430,11 @@
           encodeURIComponent(subject) +
           "&body=" +
           encodeURIComponent(body);
+      }
+      if (ctaLabel) {
+        ctaLabel.textContent = selectedTime
+          ? "Request " + shortDate.replace(",", "") + " · " + selectedTime
+          : "Request this slot";
       }
     }
 
@@ -483,7 +501,8 @@
 
       for (let day = 1; day <= totalDays; day++) {
         const date = new Date(year, month, day);
-        const disabled = date < today;
+        const times = availableTimes(date);
+        const disabled = date < today || times.length === 0;
         const button = document.createElement("button");
         button.type = "button";
         button.className = "booking-calendar__day";

@@ -8046,3 +8046,33 @@ body {
     font-size: 9.5px;
   }
 }
+
+/* Keep the date squares small, but give them a more comfortable hit area. */
+.booking-calendar__day::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34px;
+  height: 34px;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+}
+
+.booking-calendar__nav,
+.booking-calendar__slot {
+  cursor: pointer;
+}
+
+.booking-calendar__nav:disabled {
+  cursor: not-allowed;
+}
+
+.booking-calendar__reassurance {
+  max-width: 340px;
+  margin: 10px auto 0;
+  font-size: 9.5px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--muted-2);
+}

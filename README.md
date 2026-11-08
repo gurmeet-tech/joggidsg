@@ -49,7 +49,7 @@ three-slice intro; `?intro=0` skips it and `?intro=1` forces it.
 | `index.html` | Landing page markup, SVG sprite, hero, booking calendar, lightbox, intro loader |
 | `short-form.html` / `long-form.html` | Work pages and their galleries |
 | `styles.css` | Tokens, device-aware themes, editorial hero, Dynamic Island navigation, booking, reviews, WhatsApp CTA, responsive rules |
-| `script.js` | Theme defaults, nav state/progress, mobile menu, booking calendar, intro, filters/previews, lightbox, footer glow, counters, media guards |
+| `script.js` | Theme defaults, nav state/progress, mobile menu, booking calendar, intro, filters/previews, lightbox, counters, media guards |
 | `hero-3d.js` | GSAP ScrollTrigger scrub for the hero video card |
 | `hero-particles.js` | Canvas dust that falls through the hero ray field |
 | `light-rays.js` | WebGL LightRays module used behind the hero |
@@ -85,10 +85,12 @@ three-slice intro; `?intro=0` skips it and `?intro=1` forces it.
 - **Device-aware theme defaults** - mobile and tablet open in light mode, desktop
   opens in dark mode. An explicit choice is saved in `localStorage` under
   `mm-theme` and wins on later visits.
-- **Minimal booking flow** - `#book` is a compact calendar with small square
-  date buttons, weekday and weekend availability, and a prefilled email request.
-  The dates have no hover animation and use native buttons and default cursors,
-  with no backend dependency.
+- **Minimal booking flow** - `#book` is a compact, flat calendar with small
+  square date buttons, weekday and weekend availability, and a prefilled email
+  request. Dates have no hover animation, use native buttons and default
+  cursors, and keep a larger invisible tap target on mobile. The CTA repeats the
+  selected date/time, past slots are hidden for today, and there is no backend
+  dependency.
 - **Editorial reviews** - rounded cards with a faint brand watermark, a stronger
   card silhouette, quote detail and clear Book a call / See the work CTAs.
 - **MagicBento values grid** - a vanilla spotlight/border port with keyboard
@@ -142,7 +144,8 @@ HLS with a licence server, or visible per-viewer watermarking.
   opens WhatsApp with a prefilled message but no fixed recipient.
 - Booking logic lives in `script.js` under `Booking calendar`; styles live under
   `.booking` and `.booking-calendar` in `styles.css`. It creates weekday and
-  weekend slots and builds a `mailto:` request for the selected date/time.
+  weekend slots, hides past slots for the current day (GMT), updates the CTA with
+  the selected date/time, and builds a `mailto:` request.
 - LightRays is configured with `data-rays-*` attributes on the hero container.
   Particle density, palette and exit fade live in `hero-particles.js`; the beam
   mask is in `styles.css` under `.hero-editorial__particles`.
